@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package tests;
+package br.ufpb.di.pdi.toolkit.test;
 
 import java.io.File;
 import java.util.Arrays;
