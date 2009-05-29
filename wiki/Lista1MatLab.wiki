@@ -17,7 +17,7 @@ bits/pixel (8 bits/componente/pixel). O sistema deve ter a seguinte funcionalida
   *a. Conversão RGB-YUV-RGB (cuidado com os limites de R, G e B!)
   *b. Exibição de bandas individuais (R, G e B) como imagens monocromáticas ou coloridas (em tons de R, G ou B, respectivamente)
   *c. ~~Negativo (intensidade na saída = 255 – intensidade na entrada)~~
-  *d. Controle de brilho aditivo (valor do pixel resultante = valor do pixel original + c) (cuidado com os limites de R, G e B!)
+  *d. ~~Controle de brilho aditivo (valor do pixel resultante = valor do pixel original + c) (cuidado com os limites de R, G e B!)~~
   *e. Controle de brilho multiplicativo (valor do pixel resultante = valor do pixel original {{{*}}} c) (cuidado com os limites de R, G e B!)
   *f. Filtros de média e mediana de ordem n x n (valor do pixel resultante = média/mediana dos valores dos pixels originais em uma vizinhança n x n)
   *g. Filtro do desvio-padrão (valor do pixel resultante = desvio-padrão dos valores dos pixels originais em uma vizinhança n x n)
