@@ -103,9 +103,9 @@ public class ImageWrapper {
     }
 
     public void writeToDisk (File path) throws IOException {
-        BufferedImage temp = new BufferedImage(width, height, type);
+        BufferedImage temp = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         OutputStream os = new FileOutputStream(path);
-        temp.setRGB(0, 0, width, width, image, 0, width);
+        temp.setRGB(0, 0, width, height, image, 0, width);
         ImageIO.write(temp, "png", os);
     }
 
@@ -117,9 +117,9 @@ public class ImageWrapper {
 
         int row;
 
-        for (int i = 0; i < width; ++i) {
+        for (int i = 0; i < height; ++i) {
             row = i*width;
-            for (int j = 0; j < height; ++j) {
+            for (int j = 0; j < width; ++j) {
                 image[row + j] =
                         (ColorComponent.floatToByte(rArray[row + j]) << 16) |
                         (ColorComponent.floatToByte(gArray[row + j]) <<  8) |
@@ -136,11 +136,18 @@ public class ImageWrapper {
         float gArray[] = green.values;
         float bArray[] = blue.values;
 
+        if (rArray == null)
+            rArray = new float[height*width];
+        if (gArray == null)
+            gArray = new float[height*width];
+        if (bArray == null)
+            bArray = new float[height*width];
+
         int row;
 
-        for (int i = 0; i < width; ++i) {
+        for (int i = 0; i < height; ++i) {
             row = i*width;
-            for (int j = 0; j < height; ++j) {
+            for (int j = 0; j < width; ++j) {
                 rArray[row + j] =
                     ColorComponent.byteToFloat((image[row + j] & RED) >> 16 );
                 gArray[row + j] =
@@ -149,6 +156,11 @@ public class ImageWrapper {
                     ColorComponent.byteToFloat((image[row + j] & BLUE) >> 0 );
             }
         }
+
+        red.values = rArray;
+        green.values = gArray;
+        blue.values = bArray;
+
     }
 
     public void rgbToYuv () {
@@ -163,9 +175,9 @@ public class ImageWrapper {
         int row;
         int cur;
 
-        for (int i = 0; i < width; ++i) {
+        for (int i = 0; i < height; ++i) {
             row = i*width;
-            for (int j = 0; j < height; ++j) {
+            for (int j = 0; j < width; ++j) {
                 cur = row + j;
                 yArray[cur] =
                         rArray[cur]*0.299f +
@@ -196,15 +208,60 @@ public class ImageWrapper {
         result = new ImageWrapper(newWidth, newHeight);
         newArray = result.image;
 
-        for (int i = 0; i < width; ++i) {
+        for (int i = 0; i < height; ++i) {
             newRow = (i+up) * newWidth;
             row = i*width;
-            for (int j = 0; j < height; ++j) {
+            for (int j = 0; j < width; ++j) {
                 newArray[newRow + j+left] = image[row + j];
             }
         }
 
         return result;
+
+    }
+
+    public ImageWrapper crop (int up, int down, int left, int right) {
+        ImageWrapper result;
+        int newWidth = width-left-right;
+        int newHeight = height-up-down;
+        int newArray[];
+        int newRow;
+        int row;
+        result = new ImageWrapper(newWidth, newHeight);
+        newArray = result.image;
+
+        for (int i = 0; i < newHeight; ++i) {
+            newRow = (i+up) * width;
+            row = i*newWidth;
+            for (int j = 0; j < newWidth; ++j) {
+                newArray[row + j] = image[newRow + j+left];
+            }
+        }
+
+        return result;
+    }
+
+    public boolean equals (Object o) {
+        if (!(o instanceof ImageWrapper))
+            return false;
+
+        int ignoreAlpha = RED | GREEN | BLUE;
+        ImageWrapper asBrother = (ImageWrapper)o;
+        int check[] = asBrother.image;
+        boolean sameSize =
+                asBrother.height == height &&
+                asBrother.width == width;
+
+
+        if (!sameSize)
+            return false;
+
+
+        for (int i = 0; i < image.length; ++i)
+            if ((image[i] & ignoreAlpha) != (check[i] & ignoreAlpha))
+                return false;
+
+        return true;
 
     }
 
