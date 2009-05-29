@@ -109,11 +109,14 @@ public class ImageWrapper {
         ImageIO.write(temp, "png", os);
     }
 
-    public void updateImageFromRGB (int mask) {
+    public void updateImageFromRGB (int mask) throws IllegalStateException {
 
-        float rArray[] = red.values;
-        float gArray[] = green.values;
-        float bArray[] = blue.values;
+        float rArray[] = red.getValueArray();
+        float gArray[] = green.getValueArray();
+        float bArray[] = blue.getValueArray();
+        
+        if (rArray == null || gArray == null || bArray == null)
+            throw new IllegalStateException ();
 
         int row;
 
@@ -132,16 +135,9 @@ public class ImageWrapper {
     }
 
     public void createRGBFromImage () {
-        float rArray[] = red.values;
-        float gArray[] = green.values;
-        float bArray[] = blue.values;
-
-        if (rArray == null)
-            rArray = new float[height*width];
-        if (gArray == null)
-            gArray = new float[height*width];
-        if (bArray == null)
-            bArray = new float[height*width];
+        float rArray[] = red.getValueArray(true);
+        float gArray[] = green.getValueArray(true);
+        float bArray[] = blue.getValueArray(true);
 
         int row;
 
@@ -157,20 +153,19 @@ public class ImageWrapper {
             }
         }
 
-        red.values = rArray;
-        green.values = gArray;
-        blue.values = bArray;
-
     }
 
     public void rgbToYuv () {
-        float rArray[] = red.values;
-        float gArray[] = green.values;
-        float bArray[] = blue.values;
+        float rArray[] = red.getValueArray();
+        float gArray[] = green.getValueArray();
+        float bArray[] = blue.getValueArray();
 
-        float yArray[] = yComponent.values;
-        float uArray[] = uComponent.values;
-        float vArray[] = vComponent.values;
+        if (rArray == null || gArray == null || bArray == null)
+            throw new IllegalStateException ();
+
+        float yArray[] = yComponent.getValueArray(true);
+        float uArray[] = uComponent.getValueArray(true);
+        float vArray[] = vComponent.getValueArray(true);
 
         int row;
         int cur;
