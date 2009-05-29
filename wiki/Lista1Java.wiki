@@ -14,7 +14,7 @@ Esta é a lista do que precisa ser feito.
 
 Desenvolva um sistema para abrir, exibir, manipular e salvar imagens RGB com 24
 bits/pixel (8 bits/componente/pixel). O sistema deve ter a seguinte funcionalidade:
-  *a. Conversão RGB-YUV-RGB (cuidado com os limites de R, G e B!)
+  *a. *Conversão RGB-YUV-RGB (cuidado com os limites de R, G e B!)* Thiago
   *b. Exibição de bandas individuais (R, G e B) como imagens monocromáticas ou coloridas (em tons de R, G ou B, respectivamente)
   *c. Negativo (intensidade na saída = 255 – intensidade na entrada)
   *d. Controle de brilho aditivo (valor do pixel resultante = valor do pixel original + c) (cuidado com os limites de R, G e B!)
