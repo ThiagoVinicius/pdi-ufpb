@@ -6,12 +6,13 @@
 package br.ufpb.di.pdi.toolkit;
 
 import br.ufpb.di.pdi.toolkit.exception.WrongImageSizeException;
+import java.util.Arrays;
 
 /**
  *
  * @author Thiago
  */
-public class ColorComponent {
+public class ColorComponent implements Cloneable {
 
     private float values[];
     public final int width, heigth;
@@ -49,6 +50,14 @@ public class ColorComponent {
         if (allocateNewIfNecessary && values == null)
             values = new float[width*heigth];
         return values;
+    }
+
+    @Override
+    public ColorComponent clone () {
+        ColorComponent result;
+        result = new ColorComponent(width, heigth);
+        result.values = Arrays.copyOf(values, values.length);
+        return result;
     }
 
 
