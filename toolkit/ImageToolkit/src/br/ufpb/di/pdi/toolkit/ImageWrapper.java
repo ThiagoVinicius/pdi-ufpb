@@ -13,12 +13,14 @@ import javax.imageio.ImageIO;
 import br.ufpb.di.pdi.toolkit.exception.WrongImageSizeException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Thiago
  */
-public class ImageWrapper {
+public class ImageWrapper implements Cloneable {
 
 
     /**largura da imagem*/
@@ -258,6 +260,34 @@ public class ImageWrapper {
 
         return true;
 
+    }
+
+    @Override
+    public ImageWrapper clone() {
+        ImageWrapper result;
+        result = new ImageWrapper(width, height,
+                Arrays.copyOf(image, image.length));
+
+        try {
+
+            if (red != null)
+                result.red.setValueArray(red.clone().getValueArray());
+            if (green != null)
+                result.green.setValueArray(green.clone().getValueArray());
+            if (blue != null)
+                result.blue.setValueArray(blue.clone().getValueArray());
+            if (yComponent != null)
+                result.yComponent.setValueArray(yComponent.clone().getValueArray());
+            if (uComponent != null)
+                result.uComponent.setValueArray(uComponent.clone().getValueArray());
+            if (vComponent != null)
+                result.vComponent.setValueArray(vComponent.clone().getValueArray());
+
+        } catch (WrongImageSizeException e) {
+            System.err.println("Excecao inesperada!");
+        }
+
+        return result;
     }
 
 }
