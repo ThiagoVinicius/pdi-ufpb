@@ -21,11 +21,11 @@ import junit.framework.TestCase;
  */
 public class FilterTest extends TestCase {
 
-    public static final String FILENAMES[] = {
-        "atlantis.jpg",
-        "vialactea.jpg",
-        "thiago.jpg"
-    };
+    public static final File FILENAMES[];
+    
+    static {
+    	 FILENAMES = new File("input").listFiles();
+    }
     
     private static void applyRGBFilter (AbstractFilter filter, ImageWrapper target) {
 
@@ -63,16 +63,16 @@ public class FilterTest extends TestCase {
 
     public void testAditiveBrightness () throws Exception {
 
-        for (String i : FILENAMES) {
+        for (File i : FILENAMES) {
 
             System.out.println("Processando brilho aditivo em: "+i);
 
-            ImageWrapper original = readImage(new File(i));
+            ImageWrapper original = readImage(i);
 
             AditiveBrightness filter = new AditiveBrightness(50);
             applyRGBFilter(filter, original);
 
-            writeImage(original, new File (i+"brilho 50.png"));
+            writeImage(original, new File (i.getName()+"brilho 50.png"));
 
             System.out.println("----- ----- ----- ----- -----");
 
@@ -82,16 +82,16 @@ public class FilterTest extends TestCase {
 
     public void testNegative () throws Exception {
 
-        for (String i : FILENAMES) {
+        for (File i : FILENAMES) {
 
             System.out.println("Processando negativo em: "+i);
 
-            ImageWrapper original = readImage(new File(i));
+            ImageWrapper original = readImage(i);
 
             Negative filter = new Negative();
             applyRGBFilter(filter, original);
 
-            writeImage(original, new File (i+"negativo.png"));
+            writeImage(original, new File (i.getName()+"negativo.png"));
 
             System.out.println("----- ----- ----- ----- -----");
 
@@ -100,16 +100,16 @@ public class FilterTest extends TestCase {
 
     public void testConcurrentNegative () throws Exception {
 
-        for (String i : FILENAMES) {
+        for (File i : FILENAMES) {
 
             System.out.println("Processando negativo concorrente em: "+i);
 
-            ImageWrapper original = readImage(new File(i));
+            ImageWrapper original = readImage(i);
 
             Negative filter = new Negative(true);
             applyRGBFilter(filter, original);
 
-            writeImage(original, new File (i+"negativo concorrente.png"));
+            writeImage(original, new File (i.getName()+"negativo concorrente.png"));
 
             System.out.println("----- ----- ----- ----- -----");
 
