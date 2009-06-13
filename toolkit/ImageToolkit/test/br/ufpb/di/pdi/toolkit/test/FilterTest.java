@@ -8,8 +8,10 @@ package br.ufpb.di.pdi.toolkit.test;
 import br.ufpb.di.pdi.toolkit.ImageWrapper;
 import br.ufpb.di.pdi.toolkit.filter.AbstractFilter;
 import br.ufpb.di.pdi.toolkit.filter.AditiveBrightness;
+import br.ufpb.di.pdi.toolkit.filter.AreaFilter;
+import br.ufpb.di.pdi.toolkit.filter.Average;
+import br.ufpb.di.pdi.toolkit.filter.ConcurrentFilter;
 import br.ufpb.di.pdi.toolkit.filter.Negative;
-import br.ufpb.di.pdi.toolkit.filter.PointyFilter;
 import br.ufpb.di.pdi.toolkit.test.util.Timer;
 import java.io.File;
 import java.util.logging.Logger;
@@ -80,24 +82,6 @@ public class FilterTest extends TestCase {
 
     }
 
-    public void testNegative () throws Exception {
-
-        for (File i : FILENAMES) {
-
-            System.out.println("Processando negativo em: "+i);
-
-            ImageWrapper original = readImage(i);
-
-            Negative filter = new Negative();
-            applyRGBFilter(filter, original);
-
-            writeImage(original, new File (i.getName()+"negativo.png"));
-
-            System.out.println("----- ----- ----- ----- -----");
-
-        }
-    }
-
     public void testConcurrentNegative () throws Exception {
 
         for (File i : FILENAMES) {
@@ -106,10 +90,28 @@ public class FilterTest extends TestCase {
 
             ImageWrapper original = readImage(i);
 
-            Negative filter = new Negative(true);
+            Negative filter = new Negative();
             applyRGBFilter(filter, original);
 
             writeImage(original, new File (i.getName()+"negativo concorrente.png"));
+
+            System.out.println("----- ----- ----- ----- -----");
+
+        }
+    }
+
+    public void testAverage () throws Exception {
+
+        for (File i : FILENAMES) {
+
+            System.out.println("Processando media em: "+i);
+
+            ImageWrapper original = readImage(i);
+
+            Average filter = new Average(3);
+            applyRGBFilter(filter, original);
+
+            writeImage(original, new File (i.getName()+" media concorrente.png"));
 
             System.out.println("----- ----- ----- ----- -----");
 
