@@ -21,13 +21,6 @@ public class Average extends ConcurrentFilter {
     }
 
     @Override
-    public void applyFilter(ColorComponent dest, ColorComponent source) {
-        super.applyFilter(dest, source);
-    }
-
-
-
-    @Override
     public void applyFilter(ColorComponent dest, 
                             ColorComponent source,
                             int xi,
