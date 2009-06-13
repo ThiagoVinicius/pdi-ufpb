@@ -11,6 +11,8 @@ import br.ufpb.di.pdi.toolkit.filter.AditiveBrightness;
 import br.ufpb.di.pdi.toolkit.filter.AreaFilter;
 import br.ufpb.di.pdi.toolkit.filter.Average;
 import br.ufpb.di.pdi.toolkit.filter.ConcurrentFilter;
+import br.ufpb.di.pdi.toolkit.filter.Median;
+import br.ufpb.di.pdi.toolkit.filter.MultiplicativeBrightness;
 import br.ufpb.di.pdi.toolkit.filter.Negative;
 import br.ufpb.di.pdi.toolkit.test.util.Timer;
 import java.io.File;
@@ -112,6 +114,42 @@ public class FilterTest extends TestCase {
             applyRGBFilter(filter, original);
 
             writeImage(original, new File (i.getName()+" media concorrente.png"));
+
+            System.out.println("----- ----- ----- ----- -----");
+
+        }
+    }
+    
+    public void testMultiplicative () throws Exception {
+
+        for (File i : FILENAMES) {
+
+            System.out.println("Processando brilho multiplicativo em: "+i);
+
+            ImageWrapper original = readImage(i);
+
+            MultiplicativeBrightness filter = new MultiplicativeBrightness(0.6f);
+            applyRGBFilter(filter, original);
+
+            writeImage(original, new File (i.getName()+" brilho multiplicativo concorrente.png"));
+
+            System.out.println("----- ----- ----- ----- -----");
+
+        }
+    }
+    
+    public void testMedian () throws Exception {
+
+        for (File i : FILENAMES) {
+
+            System.out.println("Processando mediana em: "+i);
+
+            ImageWrapper original = readImage(i);
+
+            Median filter = new Median(3);
+            applyRGBFilter(filter, original);
+
+            writeImage(original, new File (i.getName()+" mediana.png"));
 
             System.out.println("----- ----- ----- ----- -----");
 
