@@ -14,6 +14,7 @@ import br.ufpb.di.pdi.toolkit.filter.ConcurrentFilter;
 import br.ufpb.di.pdi.toolkit.filter.Median;
 import br.ufpb.di.pdi.toolkit.filter.MultiplicativeBrightness;
 import br.ufpb.di.pdi.toolkit.filter.Negative;
+import br.ufpb.di.pdi.toolkit.filter.StandardDeviation;
 import br.ufpb.di.pdi.toolkit.test.util.Timer;
 import java.io.File;
 import java.util.logging.Logger;
@@ -146,10 +147,28 @@ public class FilterTest extends TestCase {
 
             ImageWrapper original = readImage(i);
 
-            Median filter = new Median(3);
+            Median filter = new Median(1);
             applyRGBFilter(filter, original);
 
             writeImage(original, new File (i.getName()+" mediana.png"));
+
+            System.out.println("----- ----- ----- ----- -----");
+
+        }
+    }
+    
+    public void testStdDev () throws Exception {
+
+        for (File i : FILENAMES) {
+
+            System.out.println("Processando desvio padrao em: "+i);
+
+            ImageWrapper original = readImage(i);
+
+            StandardDeviation filter = new StandardDeviation(1);
+            applyRGBFilter(filter, original);
+
+            writeImage(original, new File (i.getName()+" desvio padrao.png"));
 
             System.out.println("----- ----- ----- ----- -----");
 
