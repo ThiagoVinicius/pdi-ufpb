@@ -70,18 +70,17 @@ public class ConcurrentFilterApplier {
         awaitTermination = new Semaphore(0);
 
         for (int i = 0; i < threads-1; ++i) {
-            //es.submit(
-            new Thread(       new Slave(
+            es.submit(
+                    new Slave(
                     awaitTermination,
                     dest,
                     source,
                     0,
                     source.width,
                     step*i,
-                    step)).start();
+                    step));
         }
-        //es.submit(
-        new Thread(
+        es.submit(
                 new Slave(
                 awaitTermination,
                 dest,
@@ -89,7 +88,7 @@ public class ConcurrentFilterApplier {
                 0,
                 source.width,
                 step*(threads-1),
-                step + stepRemainder)).start();
+                step + stepRemainder));
 
         awaitTermination.acquireUninterruptibly(threads);
 

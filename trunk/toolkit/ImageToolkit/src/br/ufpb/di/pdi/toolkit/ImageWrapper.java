@@ -74,7 +74,7 @@ public class ImageWrapper implements Cloneable {
         this(width, height, new int[width*height]);
     }
 
-    private void loadFromDiskImpl (File path, BufferedImage bi) {
+    private void loadFromDiskImpl (BufferedImage bi) {
         type = bi.getType();
 
         bi.getRGB(0, 0, width, height, image, 0, width);
@@ -87,7 +87,7 @@ public class ImageWrapper implements Cloneable {
         if (temp.getHeight() != height || temp.getWidth() != width)
             throw new WrongImageSizeException();
 
-        loadFromDiskImpl(path, temp);
+        loadFromDiskImpl(temp);
         
     }
 
@@ -98,18 +98,38 @@ public class ImageWrapper implements Cloneable {
 
         result = new ImageWrapper(temp.getWidth(), temp.getHeight());
 
-        result.loadFromDiskImpl(path, temp);
+        result.loadFromDiskImpl(temp);
 
         return result;
 
     }
 
-    public void writeToDisk (File path) throws IOException {
-        BufferedImage temp = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        OutputStream os = new FileOutputStream(path);
-        temp.setRGB(0, 0, width, height, image, 0, width);
-        ImageIO.write(temp, "png", os);
+    public static ImageWrapper createFromBuffer (BufferedImage bi) {
+        ImageWrapper result;
+        result = new ImageWrapper(bi.getWidth(), bi.getHeight());
+        result.loadFromDiskImpl(bi);
+        return result;
     }
+
+    public void writeToDisk (File path) throws IOException {
+        OutputStream os = new FileOutputStream(path);
+        ImageIO.write(toBufferedImage(), "png", os);
+    }
+
+    public BufferedImage toBufferedImage () {
+        BufferedImage temp = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        temp.setRGB(0, 0, width, height, image, 0, width);
+        return temp;
+    }
+
+    public void writeToBufferedImage (BufferedImage where) 
+            throws WrongImageSizeException {
+        if (where.getHeight() != height || where.getWidth() != width)
+            throw new WrongImageSizeException();
+        where.setRGB(0, 0, width, height, image, 0, width);
+    }
+
+
 
     public void updateImageFromRGB (int mask) throws IllegalStateException {
 
