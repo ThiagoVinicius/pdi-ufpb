@@ -11,22 +11,38 @@ import br.ufpb.di.pdi.toolkit.ColorComponent;
  *
  * @author thiago
  */
-public class AditiveBrightness extends PointyFilter {
+public class AditiveBrightness extends ConcurrentPointyFilter {
 
-    private float aditiveFactor;
+    public final float aditiveFactor;
 
     public AditiveBrightness (int add) {
         aditiveFactor = add / 255.0f;
     }
 
     @Override
-    public void applyFilter(ColorComponent dest, ColorComponent source) {
-        
+    public void applyFilter(
+            ColorComponent dest,
+            ColorComponent source,
+            int xi,
+            int width,
+            int yi,
+            int height) {
+
         float destination[] = dest.getValueArray(true);
         float from[] = source.getValueArray();
 
-        for (int i = 0; i < destination.length; ++i)
-            destination[i] = from[i] + aditiveFactor;
+        int row;
+        final int iMax, jMax;
+
+        iMax = yi+height;
+        jMax = xi+width;
+
+        for (int i = yi; i < iMax; ++i) {
+            row = i*width;
+            for (int j = xi; j < jMax; ++j) {
+                destination[row+j] = from[row+j] + aditiveFactor;
+            }
+        }
 
     }
 

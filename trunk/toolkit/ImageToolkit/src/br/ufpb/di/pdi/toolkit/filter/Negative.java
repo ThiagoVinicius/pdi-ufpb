@@ -14,31 +14,7 @@ import br.ufpb.di.pdi.toolkit.ImageWrapper;
  */
 public class Negative extends ConcurrentPointyFilter {
 
-    public final boolean useConcurrency;
-
-    public Negative (boolean useConcurrency) {
-        this.useConcurrency = useConcurrency;
-    }
-
     public Negative () {
-        this(false);
-    }
-
-    @Override
-    public void applyFilter(ColorComponent dest, ColorComponent source) {
-
-        if (useConcurrency) {
-            super.applyFilter(dest, source);
-        }
-
-        else {
-            float destination[] = dest.getValueArray(true);
-            float from[] = source.getValueArray();
-
-            for (int i = 0; i < destination.length; ++i)
-                destination[i] = 1.0f - from[i];
-        }
-
     }
 
     public void applyFilter(

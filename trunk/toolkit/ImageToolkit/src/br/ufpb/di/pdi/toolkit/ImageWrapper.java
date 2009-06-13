@@ -276,11 +276,11 @@ public class ImageWrapper implements Cloneable {
                 result.green.setValueArray(green.clone().getValueArray());
             if (blue != null)
                 result.blue.setValueArray(blue.clone().getValueArray());
-            if (yComponent != null)
+            if (yComponent.getValueArray() != null)
                 result.yComponent.setValueArray(yComponent.clone().getValueArray());
-            if (uComponent != null)
+            if (uComponent.getValueArray() != null)
                 result.uComponent.setValueArray(uComponent.clone().getValueArray());
-            if (vComponent != null)
+            if (vComponent.getValueArray() != null)
                 result.vComponent.setValueArray(vComponent.clone().getValueArray());
 
         } catch (WrongImageSizeException e) {
