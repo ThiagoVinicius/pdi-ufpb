@@ -5,6 +5,7 @@
 
 package br.ufpb.di.pdi.gui.menus;
 
+import br.ufpb.di.pdi.gui.GUIResourceManager;
 import br.ufpb.di.pdi.gui.MainWindow;
 import br.ufpb.di.pdi.gui.filechooser.FileChooserManager;
 import java.awt.event.ActionEvent;
@@ -30,6 +31,7 @@ public class FileMenu extends JMenu {
 
         JMenuItem item1;
         JMenuItem item2;
+        JMenuItem item3;
 
 
         item1 = new JMenuItem("Abrir");
@@ -49,9 +51,13 @@ public class FileMenu extends JMenu {
             }
         });
 
-
-
-
+        item3 = new JMenuItem("Encerrar programa");
+        add(item3);
+        item3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                GUIResourceManager.getInstance().shutDownNow();
+            }
+        });
 
 
     }

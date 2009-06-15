@@ -48,6 +48,14 @@ public class GUIResourceManager {
             doShutdown();
     }
 
+    public void addShutdownListener (ShutdownListener listener) {
+        shutdown.add(listener);
+    }
+
+    public void removeShutdownListener (ShutdownListener listener) {
+        while (shutdown.remove(listener));
+    }
+
     private void doShutdown () {
         try {
             for (ShutdownListener i : shutdown)
@@ -56,6 +64,10 @@ public class GUIResourceManager {
             System.exit(1);
         }
         System.exit(0);
+    }
+
+    public void shutDownNow () {
+        doShutdown();
     }
 
     public void mayNowShutdown () {
