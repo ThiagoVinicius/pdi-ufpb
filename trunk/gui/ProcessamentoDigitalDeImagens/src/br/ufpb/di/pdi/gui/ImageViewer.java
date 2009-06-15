@@ -106,7 +106,6 @@ public class ImageViewer implements Icon {
             currentImage.rgbToYuv();
             makeMonoOfComponent(currentImage.yComponent);
         } else if (monoType == VIEW_COLOR) {
-            System.out.println("RGB");
             currentImage.updateImageFromRGB(ImageWrapper.RED | ImageWrapper.GREEN | ImageWrapper.BLUE);
         } 
     }

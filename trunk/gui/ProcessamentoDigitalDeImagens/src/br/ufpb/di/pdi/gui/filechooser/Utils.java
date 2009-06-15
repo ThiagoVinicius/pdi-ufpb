@@ -56,6 +56,19 @@ public class Utils {
         }
         return ext;
     }
+    
+    public static String getFileName(File f) {
+        String ext = null;
+        String s = f.getName();
+        int i = s.lastIndexOf(File.pathSeparatorChar);
+
+        if (i > 0 &&  i < s.length() - 1) {
+            ext = s.substring(i+1).toLowerCase();
+        }
+        return ext;
+    }
+
+
 
     /** Returns an ImageIcon, or null if the path was invalid. */
     protected static ImageIcon createImageIcon(String path) {

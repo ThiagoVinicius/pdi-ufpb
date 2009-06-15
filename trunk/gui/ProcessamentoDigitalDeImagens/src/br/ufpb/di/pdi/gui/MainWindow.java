@@ -7,6 +7,8 @@ package br.ufpb.di.pdi.gui;
 
 import br.ufpb.di.pdi.gui.filechooser.FileChooserManager;
 import br.ufpb.di.pdi.gui.menus.MainMenu;
+import br.ufpb.di.pdi.gui.menus.MainMenuBar;
+import br.ufpb.di.pdi.gui.menus.MainMenuPopup;
 import br.ufpb.di.pdi.toolkit.ImageWrapper;
 import br.ufpb.di.pdi.toolkit.filter.AbstractFilter;
 import java.awt.Component;
@@ -23,6 +25,7 @@ import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -33,7 +36,7 @@ import javax.swing.SwingUtilities;
  *
  * @author thiago
  */
-public class MainWindow extends JFrame implements MouseListener {
+public class MainWindow extends JFrame implements MouseListener, ShutdownListener {
 
     File originalPath;
     ImageWrapper image;
@@ -41,8 +44,9 @@ public class MainWindow extends JFrame implements MouseListener {
 
     public ImageViewer icon;
     JLabel label;
-    JMenu  mainMenu;
-    JPopupMenu popup;
+    MainMenu  mainMenu;
+    MainMenuPopup popup;
+    MainMenuBar bar;
 
     public MainWindow (String title, ImageWrapper image) {
         super(title);
@@ -57,7 +61,7 @@ public class MainWindow extends JFrame implements MouseListener {
     }
 
     public MainWindow (String title, File image) throws IOException {
-        super(title + image.getAbsolutePath());
+        super(title);
         this.image = ImageWrapper.createFromDisk(image);
         initComponents();
     }
@@ -82,10 +86,12 @@ public class MainWindow extends JFrame implements MouseListener {
         label.addMouseListener(this);
         getContentPane().add(new JScrollPane(label));
 
-        mainMenu = new MainMenu(this);
-        popup = new JPopupMenu();
-        for (int i = 0; i < mainMenu.getItemCount(); ++i)
-            popup.add(mainMenu.getItem(i));
+        //mainMenu = new MainMenu(this);
+        popup = new MainMenuPopup(this);
+
+        bar = new MainMenuBar(this);
+        this.setJMenuBar(bar);
+
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
@@ -96,6 +102,7 @@ public class MainWindow extends JFrame implements MouseListener {
         icon.setImage(image);
         if (image.red.getValueArray() == null)
             image.createRGBFromImage();
+        GUIResourceManager.getInstance().addShutdownListener(this);
     }
 
     @Override
@@ -109,6 +116,7 @@ public class MainWindow extends JFrame implements MouseListener {
     @Override
     public void dispose() {
         super.dispose();
+        GUIResourceManager.getInstance().removeShutdownListener(this);
         GUIResourceManager.getInstance().unregisterWindow(this);
     }
 
@@ -139,7 +147,7 @@ public class MainWindow extends JFrame implements MouseListener {
 
             public void run() {
                 MainWindow main =
-                    new MainWindow(getTitle() +" : "+
+                    new MainWindow(getTitle() +" ---> "+
                         filter.toString(), newImage);
                 main.icon.update();
                 main.setVisible(true);
@@ -164,6 +172,10 @@ public class MainWindow extends JFrame implements MouseListener {
     }
 
     public void mouseExited(MouseEvent e) {
+    }
+
+    public void shutDownNow() {
+        dispose();
     }
 
 }

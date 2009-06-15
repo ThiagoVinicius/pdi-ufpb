@@ -10,6 +10,7 @@ import br.ufpb.di.pdi.gui.MainWindow;
 import br.ufpb.di.pdi.gui.GUIResourceManager;
 import br.ufpb.di.pdi.gui.TransparentFrame;
 import br.ufpb.di.pdi.gui.filechooser.FileChooserManager;
+import br.ufpb.di.pdi.gui.filechooser.Utils;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -41,15 +42,17 @@ public class Main {
      */
 
     private static class Openner implements Runnable {
-        public final String filename;
+        public final File filename;
 
-        public Openner(String filename) {
+        public Openner(File filename) {
             this.filename = filename;
         }
 
         public void run() {
             try {
-                new MainWindow(filename, new File(filename)).setVisible(true);
+                new MainWindow(
+                        filename.getName(),
+                        filename).setVisible(true);
             } catch (IOException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -95,7 +98,7 @@ public class Main {
 
     public static void run (String args[]) {
         for (String i : args) {
-            SwingUtilities.invokeLater(new Openner(i));
+            SwingUtilities.invokeLater(new Openner(new File(i)));
         }
     }
 
