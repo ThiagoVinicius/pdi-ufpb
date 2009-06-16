@@ -14,6 +14,7 @@ import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
 /**
@@ -23,6 +24,7 @@ import javax.swing.JRadioButtonMenuItem;
 public class ExibitionMenu extends JMenu {
 
     private MainWindow father;
+    private JCheckBoxMenuItem red, green, blue;
 
     public ExibitionMenu (MainWindow father) {
         super("Exibição");
@@ -87,9 +89,9 @@ public class ExibitionMenu extends JMenu {
         });
 
 
-        JCheckBoxMenuItem item6 = new JCheckBoxMenuItem("Vermelho");
-        mask.add(item6);
-        item6.addActionListener(new ActionListener() {
+        red = new JCheckBoxMenuItem("Vermelho");
+        mask.add(red);
+        red.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int mask = father.icon.getExibitionMask();
                 mask = ((AbstractButton) e.getSource()).isSelected() ?
@@ -99,9 +101,9 @@ public class ExibitionMenu extends JMenu {
             }
         });
 
-        JCheckBoxMenuItem item7 = new JCheckBoxMenuItem("Verde");
-        mask.add(item7);
-        item7.addActionListener(new ActionListener() {
+        green = new JCheckBoxMenuItem("Verde");
+        mask.add(green);
+        green.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int mask = father.icon.getExibitionMask();
                 mask = ((AbstractButton) e.getSource()).isSelected() ?
@@ -111,14 +113,69 @@ public class ExibitionMenu extends JMenu {
             }
         });
 
-        JCheckBoxMenuItem item8 = new JCheckBoxMenuItem("Azul");
-        mask.add(item8);
-        item8.addActionListener(new ActionListener() {
+        blue = new JCheckBoxMenuItem("Azul");
+        mask.add(blue);
+        blue.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int mask = father.icon.getExibitionMask();
                 mask = ((AbstractButton) e.getSource()).isSelected() ?
                     mask | ImageWrapper.BLUE : mask & ~ImageWrapper.BLUE ;
                 father.icon.setExibitionMask(mask);
+                update();
+            }
+        });
+
+        mask.addSeparator();
+
+        JMenuItem item10 = new JMenuItem ("RGB");
+        mask.add(item10);
+        item10.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                red.  setSelected(true);
+                green.setSelected(true);
+                blue. setSelected(true);
+                father.icon.setExibitionMask(
+                     ImageWrapper.RED | ImageWrapper.GREEN | ImageWrapper.BLUE);
+                update();
+            }
+        });
+
+
+        JMenuItem item11 = new JMenuItem ("Vermelho apenas");
+        mask.add(item11);
+        item11.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                red.  setSelected(true);
+                green.setSelected(false);
+                blue. setSelected(false);
+                father.icon.setExibitionMask(
+                     ImageWrapper.RED);
+                update();
+            }
+        });
+
+        JMenuItem item12 = new JMenuItem ("Verde apenas");
+        mask.add(item12);
+        item12.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                red.  setSelected(false);
+                green.setSelected(true);
+                blue. setSelected(false);
+                father.icon.setExibitionMask(
+                     ImageWrapper.GREEN);
+                update();
+            }
+        });
+
+        JMenuItem item13 = new JMenuItem ("Azul apenas");
+        mask.add(item13);
+        item13.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                red.  setSelected(false);
+                green.setSelected(false);
+                blue. setSelected(true);
+                father.icon.setExibitionMask(
+                     ImageWrapper.BLUE);
                 update();
             }
         });
@@ -131,9 +188,9 @@ public class ExibitionMenu extends JMenu {
         item3.setSelected(false);
         item4.setSelected(false);
         item5.setSelected(true);
-        item6.setSelected(true);
-        item7.setSelected(true);
-        item8.setSelected(true);
+        red.setSelected(true);
+        green.setSelected(true);
+        blue.setSelected(true);
 
 
     }
