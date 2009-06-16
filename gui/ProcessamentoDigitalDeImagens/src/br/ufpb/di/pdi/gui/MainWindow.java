@@ -39,7 +39,7 @@ import javax.swing.SwingUtilities;
 public class MainWindow extends JFrame implements MouseListener, ShutdownListener {
 
     File originalPath;
-    ImageWrapper image;
+    public ImageWrapper image;
 
 
     public ImageViewer icon;
@@ -120,7 +120,8 @@ public class MainWindow extends JFrame implements MouseListener, ShutdownListene
         GUIResourceManager.getInstance().unregisterWindow(this);
     }
 
-    private void applyFilterImpl (ImageWrapper target, 
+    private static void applyFilterImpl (ImageWrapper target,
+                                  ImageWrapper source,
                                   AbstractFilter filter,
                                   int mask) {
         
@@ -129,19 +130,21 @@ public class MainWindow extends JFrame implements MouseListener, ShutdownListene
 
         //filtrando algo em YUV.
         if ((mask & AbstractFilter.YUV) != 0x00) {
-            target.rgbToYuv();
-            filter.applyFilter(target, mask);
+            filter.applyFilter(target, source, mask);
             target.yuvToRgb();
         } else {
-            filter.applyFilter(target, mask);
+            filter.applyFilter(target, source, mask);
         }
     }
 
     public void applyFilter (final AbstractFilter filter, final int mask) {
 
-
+        if ((mask & AbstractFilter.YUV) != 0x00) {
+            image.rgbToYuv();
+        }
+        
         final ImageWrapper newImage = image.clone();
-        applyFilterImpl(newImage, filter, mask);
+        applyFilterImpl(newImage, image, filter, mask);
 
         SwingUtilities.invokeLater( new Runnable() {
 

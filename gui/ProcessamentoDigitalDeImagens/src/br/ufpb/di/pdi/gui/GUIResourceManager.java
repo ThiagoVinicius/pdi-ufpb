@@ -8,6 +8,7 @@ package br.ufpb.di.pdi.gui;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
@@ -18,7 +19,7 @@ import java.util.concurrent.Semaphore;
  */
 public class GUIResourceManager {
 
-    private Set<Window> allMainWindows = new HashSet<Window>();
+    private Set<MainWindow> allMainWindows = new HashSet<MainWindow>();
     private List<ShutdownListener> shutdown = new ArrayList<ShutdownListener>();
 
     private static GUIResourceManager singleInstance;
@@ -38,11 +39,11 @@ public class GUIResourceManager {
         return singleInstance;
     }
 
-    public synchronized void registerWindow (Window newWindow) {
+    public synchronized void registerWindow (MainWindow newWindow) {
         allMainWindows.add(newWindow);
     }
 
-    public synchronized void unregisterWindow (Window remove) {
+    public synchronized void unregisterWindow (MainWindow remove) {
         allMainWindows.remove(remove);
         if (allMainWindows.isEmpty())
             doShutdown();
@@ -68,6 +69,10 @@ public class GUIResourceManager {
 
     public void shutDownNow () {
         doShutdown();
+    }
+
+    public Iterator<MainWindow> getWindowIterator () {
+        return allMainWindows.iterator();
     }
 
     public void mayNowShutdown () {
