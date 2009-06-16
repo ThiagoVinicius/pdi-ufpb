@@ -66,4 +66,9 @@ public class Average extends ConcurrentFilter {
 
     }
 
+    @Override
+    public String toString () {
+        return "Média: " + radius;
+    }
+
 }

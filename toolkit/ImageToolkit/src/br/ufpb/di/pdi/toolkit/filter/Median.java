@@ -144,4 +144,9 @@ public class Median extends ConcurrentFilter {
 
 	}
 
+    @Override
+    public String toString () {
+        return "Mediana: " + radius;
+    }
+
 }

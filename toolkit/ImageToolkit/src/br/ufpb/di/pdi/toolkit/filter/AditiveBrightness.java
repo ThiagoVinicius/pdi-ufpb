@@ -46,4 +46,9 @@ public class AditiveBrightness extends ConcurrentPointyFilter {
 
     }
 
+    @Override
+    public String toString () {
+        return "Brilho aditivo: " + aditiveFactor;
+    }
+
 }

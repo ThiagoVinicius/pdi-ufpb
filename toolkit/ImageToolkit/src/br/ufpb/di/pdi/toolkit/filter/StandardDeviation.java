@@ -67,4 +67,9 @@ public class StandardDeviation extends ConcurrentFilter {
 
     }
 
+    @Override
+    public String toString () {
+        return "Desvio padrão: " + radius;
+    }
+
 }

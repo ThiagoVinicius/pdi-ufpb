@@ -48,4 +48,8 @@ public class SaltAndPepperNoise extends AbstractFilter{
 		
 	}
 
+    public String toString () {
+        return String.format("Sal e pimenta: %.2f", prob);
+    }
+
 }

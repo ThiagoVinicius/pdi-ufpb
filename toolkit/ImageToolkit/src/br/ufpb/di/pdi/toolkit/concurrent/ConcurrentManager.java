@@ -18,7 +18,6 @@ public class ConcurrentManager {
 
     private static void init () {
         defaultExecutorService = Executors.newCachedThreadPool();
-        System.out.println("Processadores: "+Runtime.getRuntime().availableProcessors());
     }
 
     static {
