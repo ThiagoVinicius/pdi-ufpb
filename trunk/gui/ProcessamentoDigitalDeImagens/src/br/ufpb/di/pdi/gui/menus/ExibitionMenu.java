@@ -8,15 +8,12 @@ package br.ufpb.di.pdi.gui.menus;
 import br.ufpb.di.pdi.gui.ImageViewer;
 import br.ufpb.di.pdi.gui.MainWindow;
 import br.ufpb.di.pdi.toolkit.ImageWrapper;
-import br.ufpb.di.pdi.toolkit.filter.AbstractFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.AbstractButton;
-import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
 /**

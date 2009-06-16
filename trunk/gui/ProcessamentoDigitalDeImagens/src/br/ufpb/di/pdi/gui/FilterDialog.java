@@ -7,20 +7,11 @@ package br.ufpb.di.pdi.gui;
 
 import java.awt.Component;
 import java.awt.Dialog;
-import java.awt.Dialog.ModalityType;
 import java.awt.Frame;
-import java.awt.GraphicsConfiguration;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.Semaphore;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
 
 /**
  *

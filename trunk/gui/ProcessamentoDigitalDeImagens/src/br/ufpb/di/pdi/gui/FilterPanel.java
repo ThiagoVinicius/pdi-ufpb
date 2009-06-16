@@ -11,13 +11,10 @@
 
 package br.ufpb.di.pdi.gui;
 
-import br.ufpb.di.pdi.toolkit.ImageWrapper;
 import br.ufpb.di.pdi.toolkit.filter.AbstractFilter;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.concurrent.Semaphore;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
 
 /**
  *

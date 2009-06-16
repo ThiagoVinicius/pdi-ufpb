@@ -14,7 +14,6 @@ import br.ufpb.di.pdi.toolkit.filter.Median;
 import br.ufpb.di.pdi.toolkit.filter.MultiplicativeBrightness;
 import br.ufpb.di.pdi.toolkit.filter.Negative;
 import br.ufpb.di.pdi.toolkit.filter.StandardDeviation;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;

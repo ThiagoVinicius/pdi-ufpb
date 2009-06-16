@@ -11,8 +11,6 @@ import br.ufpb.di.pdi.gui.MainWindow;
 import br.ufpb.di.pdi.toolkit.ImageWrapper;
 import br.ufpb.di.pdi.toolkit.dissolve.Dissolve;
 import br.ufpb.di.pdi.toolkit.filter.AbstractFilter;
-import com.sun.org.apache.xerces.internal.jaxp.JAXPConstants;
-import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
