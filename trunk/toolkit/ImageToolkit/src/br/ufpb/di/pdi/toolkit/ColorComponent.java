@@ -56,7 +56,10 @@ public class ColorComponent implements Cloneable {
     public ColorComponent clone () {
         ColorComponent result;
         result = new ColorComponent(width, heigth);
-        result.values = Arrays.copyOf(values, values.length);
+        if (values != null)
+            result.values = Arrays.copyOf(values, values.length);
+        else
+            result.values = null;
         return result;
     }
 

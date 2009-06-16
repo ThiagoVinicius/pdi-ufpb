@@ -33,4 +33,8 @@ public class MultiplicativeBrightness extends ConcurrentPointyFilter{
 		
 	}
 
+    public String toString () {
+        return "Brilho multiplicativo: " + multFactor;
+    }
+
 }

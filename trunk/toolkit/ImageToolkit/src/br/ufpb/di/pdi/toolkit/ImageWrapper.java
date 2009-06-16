@@ -201,17 +201,55 @@ public class ImageWrapper implements Cloneable {
                         gArray[cur]*0.587f +
                         bArray[cur]*0.114f;
 
-                uArray[row + j] =
-                    rArray[cur]*(-0.147f) +
-                    gArray[cur]*(-0.289f) +
-                    bArray[cur]*0.436f;
-                vArray[row + j] =
-                    rArray[cur]*0.615f +
-                    gArray[cur]*(-0.515f) +
-                    bArray[cur]*(-0.100f);
+                uArray[cur] =
+                        rArray[cur]*(-0.14713f) +
+                        gArray[cur]*(-0.28886f) +
+                        bArray[cur]*0.436f;
+                vArray[cur] =
+                        rArray[cur]*0.615f +
+                        gArray[cur]*(-0.51499f) +
+                        bArray[cur]*(-0.10001f);
             }
         }
 
+    }
+
+
+    public void yuvToRgb() {
+        float yArray[] = yComponent.getValueArray();
+        float uArray[] = uComponent.getValueArray();
+        float vArray[] = vComponent.getValueArray();
+
+        if (yArray == null || uArray == null || vArray == null)
+            throw new IllegalStateException ();
+
+        float rArray[] = red.getValueArray(true);
+        float gArray[] = green.getValueArray(true);
+        float bArray[] = blue.getValueArray(true);
+
+
+        int row;
+        int cur;
+
+        for (int i = 0; i < height; ++i) {
+            row = i*width;
+            for (int j = 0; j < width; ++j) {
+                cur = row + j;
+                rArray[cur] =
+                        yArray[cur]*1.0f +
+                        uArray[cur]*0.0f +
+                        vArray[cur]*1.13983f;
+
+                gArray[cur] =
+                        yArray[cur]*1.0f +
+                        uArray[cur]*(-0.39465f) +
+                        vArray[cur]*(-0.58060f);
+                bArray[cur] =
+                        yArray[cur]*1.0f +
+                        uArray[cur]*2.03211f +
+                        vArray[cur]*0.0f;
+            }
+        }
     }
 
     public ImageWrapper addBorder (int up, int down, int left, int right) {

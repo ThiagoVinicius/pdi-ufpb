@@ -43,5 +43,9 @@ public class Negative extends ConcurrentPointyFilter {
 
     }
 
+    public String toString () {
+        return "Negativo";
+    }
+
     
 }
