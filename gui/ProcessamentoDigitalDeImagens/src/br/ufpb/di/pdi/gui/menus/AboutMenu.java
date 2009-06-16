@@ -8,7 +8,6 @@ package br.ufpb.di.pdi.gui.menus;
 import br.ufpb.di.pdi.about.AboutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 /**

@@ -8,7 +8,6 @@ package br.ufpb.di.pdi.gui;
 import br.ufpb.di.pdi.toolkit.ColorComponent;
 import br.ufpb.di.pdi.toolkit.ImageWrapper;
 import br.ufpb.di.pdi.toolkit.exception.WrongImageSizeException;
-import br.ufpb.di.pdi.toolkit.filter.AbstractFilter;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
