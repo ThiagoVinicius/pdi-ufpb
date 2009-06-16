@@ -27,6 +27,10 @@ public class MainMenuPopup extends JPopupMenu {
         add(new FilterMenu(father));
         addSeparator();
         add(new NoiseMenu(father));
+        addSeparator();
+        add(new OperationMenu(father));
+        addSeparator();
+        add(new AboutMenu());
     }
 
 }
