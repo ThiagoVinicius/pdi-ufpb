@@ -12,7 +12,7 @@ public class Median extends ConcurrentFilter {
         this.radius = radius;
     }
 
-    private final float median (float arr[], final int n) {
+    public static final float median (float arr[], final int n) {
 
         //final int n = arr.length;
         float tmp;

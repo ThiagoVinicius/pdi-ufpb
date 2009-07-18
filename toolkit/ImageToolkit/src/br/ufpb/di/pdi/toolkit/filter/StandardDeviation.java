@@ -56,7 +56,7 @@ public class StandardDeviation extends ConcurrentFilter {
                 for (int k = i < radius ? 0: i-radius; k <= maxK; ++k) {
                     rowAux = k*dest.width;
                     for (int l = j < radius ? 0 : j-radius; l <= maxL; ++l) {
-                        accumulator += Math.abs(from[rowAux+l] - average);
+                        accumulator += Math.pow(from[rowAux+l] - average, 2);
                     }
                 }
                 
