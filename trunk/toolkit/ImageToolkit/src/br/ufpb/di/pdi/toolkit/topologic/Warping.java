@@ -72,7 +72,7 @@ public class Warping {
 
     }
 
-    private static final double cartezianProduct (Line2D l1, Line2D l2) {
+    private static final double internProduct (Line2D l1, Line2D l2) {
 
         return l1.getX2()*l2.getX2() + l1.getY2()*l2.getY2();
 
@@ -80,21 +80,22 @@ public class Warping {
 
     //@FIXME So leva em conta o primeiro par de vetores do array
     //@FIXME nao faz nada, alem de calcular u e v =(
-    public Point2D comesFrom (int x, int y) {
+    public Point2D comesFrom (int x, int y, int i) {
         Point2D.Double start = new Point2D.Double(x, y);
         Point2D.Float result = new Point2D.Float();
 
-        //para o 'for' que vai ser necessario
-        int i = 0;
-
-        double u = cartezianProduct(
+        double u = internProduct(
                         subtract(start, referenceVectors[i].getP1()),
                         referenceDiff[i]);
+        
+        //normalizando o u:
         u /= referenceVectors[i].getP2().distanceSq(referenceVectors[i].getP1());
-
+        
+        
         double v = referenceVectors[i].ptLineDist(start);
         v *= referenceVectors[i].relativeCCW(start);
 
+        
 
 
         return result;
