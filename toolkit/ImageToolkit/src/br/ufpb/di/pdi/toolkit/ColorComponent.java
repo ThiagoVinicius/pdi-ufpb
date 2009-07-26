@@ -119,11 +119,15 @@ public class ColorComponent implements Cloneable {
             ax = 0;
         else if (x > heigth-1)
             ax = heigth - 1;
+        else
+            ax = (int) x;
 
         if (y < 0)
             ay = 0;
         else if (y > width-1)
             ay = width - 1;
+        else
+            ay = (int) y;
 
         return values[ax*width + ay];
 
