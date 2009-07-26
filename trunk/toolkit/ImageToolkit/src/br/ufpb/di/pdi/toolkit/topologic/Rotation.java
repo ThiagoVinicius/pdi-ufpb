@@ -9,13 +9,24 @@ import java.awt.geom.Point2D;
 
 /**
  *
- * @author thiago
+ * @author thiago, gabriela
  */
 public class Rotation {
 	
 	private final Point2D rotationCenters[];
 	private final double diagonal;
+	
+	public static final int CONSTANT_THETA = 0;
+	public static final int LINEAR_THETA = 1;
+	public static final int QUAD_THETA = 2;
+	public static final int SEN_THETA = 3;
 
+	/**
+	 * 
+	 * @param rotationCenters centros de rotacao escolhidos pelo usuario
+	 * @param width largura da imagem
+	 * @param height altura da imagem
+	 */
 	public Rotation(Point2D rotationCenters[], int width, int height) {
 		this.rotationCenters = rotationCenters;
 		this.diagonal = Math.hypot(width, height);
@@ -38,6 +49,15 @@ public class Rotation {
 		return Math.sin(d*a*Math.PI)*b*Math.PI;
 	}
 	
+	/**
+	 * 
+	 * @param x do ponto da imagem final 
+	 * @param y do ponto da imagem final
+	 * @param thetaType tipo da função do angulo escolhido
+	 * @param a
+	 * @param b
+	 * @return ponto da imagem inicial de onde veio (mapeamento reverso)
+	 */
 	public Point2D comesFrom(int x, int y, int thetaType, double a, double b) {
 		final Point2D.Float pixel = new Point2D.Float(x,y);
 		Point2D.Float result = new Point2D.Float();
@@ -48,28 +68,28 @@ public class Rotation {
 		double totalWeight = 0;
 		
 		//Calculando o angulo de rotacao de acordo com a funcao escolhida
-		if(thetaType == 0) {
+		if(thetaType == Rotation.CONSTANT_THETA) {
 			for(int i=0; i<this.rotationCenters.length;i++) {
 				double d = pixel.distance(this.rotationCenters[i])/diagonal;
 				weight[i] = 1 - Math.pow(d, 2);
 				totalWeight += weight[i];
 				theta[i] = this.constantTheta(a);
 			}
-		} else if(thetaType == 1) {
+		} else if(thetaType == Rotation.LINEAR_THETA) {
 			for(int i=0; i<this.rotationCenters.length;i++) {
 				double d = pixel.distance(this.rotationCenters[i])/diagonal;
 				weight[i] = 1 - Math.pow(d, 2);
 				totalWeight += weight[i];
 				theta[i] = this.linearTheta(a, b, d);
 			}
-		} else if(thetaType == 2) {
+		} else if(thetaType == Rotation.QUAD_THETA) {
 			for(int i=0; i<this.rotationCenters.length;i++) {
 				double d = pixel.distance(this.rotationCenters[i])/diagonal;
 				weight[i] = 1 - Math.pow(d, 2);
 				totalWeight += weight[i];
 				theta[i] = this.quadTheta(a, b, d);
 			}
-		} else if(thetaType == 3) {
+		} else if(thetaType == Rotation.SEN_THETA) {
 			for(int i=0; i<this.rotationCenters.length;i++) {
 				double d = pixel.distance(this.rotationCenters[i])/diagonal;
 				weight[i] = 1 - Math.pow(d, 2);
