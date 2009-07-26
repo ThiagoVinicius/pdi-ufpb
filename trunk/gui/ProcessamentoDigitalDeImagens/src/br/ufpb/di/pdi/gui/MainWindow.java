@@ -9,6 +9,7 @@ import br.ufpb.di.pdi.gui.filechooser.FileChooserManager;
 import br.ufpb.di.pdi.gui.menus.MainMenu;
 import br.ufpb.di.pdi.gui.menus.MainMenuBar;
 import br.ufpb.di.pdi.gui.menus.MainMenuPopup;
+import br.ufpb.di.pdi.gui.rotation.ImagePanel;
 import br.ufpb.di.pdi.toolkit.ImageWrapper;
 import br.ufpb.di.pdi.toolkit.filter.AbstractFilter;
 import java.awt.event.MouseEvent;
@@ -33,7 +34,8 @@ public class MainWindow extends JFrame implements MouseListener, ShutdownListene
 
 
     public ImageViewer icon;
-    JLabel label;
+    //JLabel label;
+    ImagePanel imShow;
     MainMenu  mainMenu;
     MainMenuPopup popup;
     MainMenuBar bar;
@@ -72,9 +74,13 @@ public class MainWindow extends JFrame implements MouseListener, ShutdownListene
 
         initData();
 
-        label = new JLabel(icon);
-        label.addMouseListener(this);
-        getContentPane().add(new JScrollPane(label));
+//        label = new JLabel(icon);
+//        label.addMouseListener(this);
+//        getContentPane().add(new JScrollPane(label));
+
+        imShow = new ImagePanel(icon);
+        imShow.addMouseListener(this);
+        getContentPane().add(new JScrollPane(imShow));
 
         //mainMenu = new MainMenu(this);
         popup = new MainMenuPopup(this);
@@ -155,7 +161,8 @@ public class MainWindow extends JFrame implements MouseListener, ShutdownListene
     }
 
     public void mousePressed(MouseEvent e) {
-        popup.show(e.getComponent(), e.getX(), e.getY());
+        if (e.getButton() == MouseEvent.BUTTON3)
+            popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
     public void mouseReleased(MouseEvent e) {
