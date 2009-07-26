@@ -18,7 +18,7 @@ public class ColorComponent implements Cloneable {
     private float values[];
     public final int width, heigth;
 
-    public float borderMedian = 0.0f;
+    public float borderMedian = 1.0f;
     private int alienSelectionMethod;
 
     public static final int SELECT_ALIEN_BY_MEDIAN  = 0;
@@ -27,7 +27,7 @@ public class ColorComponent implements Cloneable {
     public ColorComponent (int width, int heigth) {
         this.width = width;
         this.heigth = heigth;
-        alienSelectionMethod = SELECT_ALIEN_BY_MEDIAN;
+        alienSelectionMethod = SELECT_ALIEN_BY_NEAREST;
     }
 
     public static float byteToFloat (int value) {
@@ -72,7 +72,7 @@ public class ColorComponent implements Cloneable {
 
     public final float get (float x, float y) {
 
-        if (x < 0 || x > heigth-1 || y < 0 || y > width-1)
+        if (x < 0 || x >= heigth-1 || y < 0 || y >= width-1)
             return getAlien(x, y);
 
         final int   xi         = (int) Math.floor(x);
@@ -101,6 +101,7 @@ public class ColorComponent implements Cloneable {
 
 
     private final float getAlien (float x, float y) {
+
         if (alienSelectionMethod == SELECT_ALIEN_BY_MEDIAN)
             return getAlienByMedian();
         else if (alienSelectionMethod == SELECT_ALIEN_BY_NEAREST)
@@ -147,12 +148,12 @@ public class ColorComponent implements Cloneable {
             ++bi;
         }
 
-        for (int i = width; i >= 0; --i) {
+        for (int i = width-1; i >= 0; --i) {
             border[bi] = values[(heigth-1)*width + i];
             ++bi;
         }
 
-        for (int i = heigth; i >= 0; --i) {
+        for (int i = heigth-1; i >= 0; --i) {
             border[bi] = values[i*width];
             ++bi;
         }
