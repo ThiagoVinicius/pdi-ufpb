@@ -7,6 +7,7 @@ package br.ufpb.di.pdi.toolkit;
 
 import br.ufpb.di.pdi.toolkit.exception.WrongImageSizeException;
 import br.ufpb.di.pdi.toolkit.filter.Median;
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 
 /**
@@ -179,6 +180,21 @@ public class ColorComponent implements Cloneable {
         result.borderMedian = borderMedian;
 
         return result;
+    }
+
+    public void imitate (ColorComponent anotherGuy) throws WrongImageSizeException {
+
+        if (width != anotherGuy.width || heigth != anotherGuy.heigth)
+            throw new InvalidParameterException("Tamanhos nao batem");
+
+        if (anotherGuy.values != null)
+            setValueArray(anotherGuy.values.clone());
+        else
+            this.values = null;
+
+        this.alienSelectionMethod = anotherGuy.alienSelectionMethod;
+        this.borderMedian         = anotherGuy.borderMedian;
+
     }
 
 

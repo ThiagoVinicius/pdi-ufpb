@@ -72,9 +72,9 @@ public class FilterTest extends TestCase {
             target.green.calculateBorderMedian();
             target.blue .calculateBorderMedian();
 
-            target.red  .setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_NEAREST);
-            target.green.setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_NEAREST);
-            target.blue .setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_NEAREST);
+            target.red  .setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_MEDIAN);
+            target.green.setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_MEDIAN);
+            target.blue .setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_MEDIAN);
 
             filter.applyFilter(target, AbstractFilter.RGB);
             target.updateImageFromRGB(ImageWrapper.RED | ImageWrapper.GREEN | ImageWrapper.BLUE);
@@ -286,34 +286,34 @@ public class FilterTest extends TestCase {
 //
 //    }
 
-//    public void testZoom2x () throws Exception {
-//
-//        for (File i : FILENAMES) {
-//
-//            System.out.println("Processando escala em: "+i);
-//
-//            ImageWrapper original = readImage(i);
-//            ImageWrapper result   = new ImageWrapper(160, 120);
-//
-//            original.createRGBFromImage();
-//
-//            Scale filter = new Scale(160, 120);
-//
-//            filter.applyFilter(result, original, AbstractFilter.RGB);
-//
-//            result.updateImageFromRGB(ImageWrapper.RED | ImageWrapper.GREEN | ImageWrapper.BLUE);
-//
-//
-//
-//            //applyRGBFilter(filter, original);
-//            //applyDebugRGBFilter(filter, original);
-//
-//            writeImage(result, new File (i.getName()+" escala 160 120.png"));
-//
-//            System.out.println("----- ----- ----- ----- -----");
-//
-//        }
-//
-//    }
+    public void testZoom2x () throws Exception {
+
+        for (File i : FILENAMES) {
+
+            System.out.println("Processando escala em: "+i);
+
+            ImageWrapper original = readImage(i);
+            ImageWrapper result   = new ImageWrapper(160, 120);
+
+            original.createRGBFromImage();
+
+            Scale filter = new Scale(160, 120);
+
+            filter.applyFilter(result, original, AbstractFilter.RGB);
+
+            result.updateImageFromRGB(ImageWrapper.RED | ImageWrapper.GREEN | ImageWrapper.BLUE);
+
+
+
+            //applyRGBFilter(filter, original);
+            //applyDebugRGBFilter(filter, original);
+
+            writeImage(result, new File (i.getName()+" escala 160 120.png"));
+
+            System.out.println("----- ----- ----- ----- -----");
+
+        }
+
+    }
 
 }
