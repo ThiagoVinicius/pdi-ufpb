@@ -65,8 +65,8 @@ public class ConcurrentFilterApplier {
 
         threads = ConcurrentManager.suggestedNumberOfExectutionThreads();
 
-        step = source.heigth/threads;
-        stepRemainder = source.heigth%threads;
+        step = dest.heigth/threads;
+        stepRemainder = dest.heigth%threads;
         awaitTermination = new Semaphore(0);
 
         for (int i = 0; i < threads-1; ++i) {
@@ -76,7 +76,7 @@ public class ConcurrentFilterApplier {
                     dest,
                     source,
                     0,
-                    source.width,
+                    dest.width,
                     step*i,
                     step));
         }
@@ -86,7 +86,7 @@ public class ConcurrentFilterApplier {
                 dest,
                 source,
                 0,
-                source.width,
+                dest.width,
                 step*(threads-1),
                 step + stepRemainder));
 
