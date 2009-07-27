@@ -18,6 +18,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractAction;
@@ -43,6 +44,14 @@ public class ImagePanel extends JLabel
 
     public ImagePanel (ImageViewer icon) {
         init(icon);
+    }
+
+    public Point2D[] getPoints() {
+        Point2D result[] = new Point2D[points.size()];
+        for (int i = 0; i < points.size(); ++i) {
+            result[i] = points.get(i).asPoint();
+        }
+        return result;
     }
 
     private void init (ImageViewer image) {
