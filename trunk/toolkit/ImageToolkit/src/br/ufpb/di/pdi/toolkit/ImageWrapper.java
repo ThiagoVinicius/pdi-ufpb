@@ -74,6 +74,24 @@ public class ImageWrapper implements Cloneable {
         this(width, height, new int[width*height]);
     }
 
+    public void setAlienSelectionMethod(int selectionMethod) {
+        red.       setAlienSelectionMethod(selectionMethod);
+        green.     setAlienSelectionMethod(selectionMethod);
+        blue.      setAlienSelectionMethod(selectionMethod);
+        yComponent.setAlienSelectionMethod(selectionMethod);
+        uComponent.setAlienSelectionMethod(selectionMethod);
+        vComponent.setAlienSelectionMethod(selectionMethod);
+    }
+
+    public void recalculateBorderMedian () {
+        red.       calculateBorderMedian();
+        green.     calculateBorderMedian();
+        blue.      calculateBorderMedian();
+        yComponent.calculateBorderMedian();
+        uComponent.calculateBorderMedian();
+        vComponent.calculateBorderMedian();
+    }
+
     private void loadFromDiskImpl (BufferedImage bi) {
         type = bi.getType();
 

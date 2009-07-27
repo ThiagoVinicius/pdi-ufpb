@@ -140,6 +140,9 @@ public class ColorComponent implements Cloneable {
 
     public void calculateBorderMedian () {
 
+        if (values == null)
+            return;
+
         final float border[] = new float[2*width + 2*heigth];
         int bi = 0;
 
