@@ -72,9 +72,9 @@ public class FilterTest extends TestCase {
             target.green.calculateBorderMedian();
             target.blue .calculateBorderMedian();
 
-            target.red  .setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_MEDIAN);
-            target.green.setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_MEDIAN);
-            target.blue .setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_MEDIAN);
+            target.red  .setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_NEAREST);
+            target.green.setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_NEAREST);
+            target.blue .setAlienSelectionMethod(ColorComponent.SELECT_ALIEN_BY_NEAREST);
 
             filter.applyFilter(target, AbstractFilter.RGB);
             target.updateImageFromRGB(ImageWrapper.RED | ImageWrapper.GREEN | ImageWrapper.BLUE);
