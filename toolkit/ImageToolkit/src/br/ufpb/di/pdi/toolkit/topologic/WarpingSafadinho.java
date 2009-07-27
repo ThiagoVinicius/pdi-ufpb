@@ -18,10 +18,10 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
  *
  * @author thiago
  */
-public class Warping extends AbstractFilter {
+public class WarpingSafadinho extends AbstractFilter {
 
-    private final Line2D targetVectors[];
     private final Line2D referenceVectors[];
+    private final Line2D targetVectors[];
 
     /**Representam os respectivos Q-P*/
     private final Line2D referenceDiff[];
@@ -47,28 +47,28 @@ public class Warping extends AbstractFilter {
      */
     public static final int COUNTER_CLOCKWISE = 1;
 
-    public Warping(Line2D targetVectors[], Line2D referenceVectors[], double a, double b, double p) {
+    public WarpingSafadinho(Line2D referenceVectors[], Line2D targetVectors[], double a, double b, double p) {
 
-        if (targetVectors.length != referenceVectors.length) {
+        if (referenceVectors.length != targetVectors.length) {
             throw new InvalidParameterException("Deve haver o mesmo numero de " +
                     "vetores referencia e alvo");
         }
 
-        this.targetVectors = targetVectors;
-        this.referenceVectors    = referenceVectors;
+        this.referenceVectors = referenceVectors;
+        this.targetVectors    = targetVectors;
 
-        this.referenceDiff    = new Line2D[targetVectors.length];
+        this.referenceDiff    = new Line2D[referenceVectors.length];
         for (int i = 0; i < referenceDiff.length; ++i) {
             referenceDiff[i] = subtract(
-                    targetVectors[i].getP2(),
-                    targetVectors[i].getP1());
-        }
-
-        this.targetDiff        = new Line2D[referenceVectors.length];
-        for (int i = 0; i < referenceDiff.length; ++i) {
-            targetDiff[i] = subtract(
                     referenceVectors[i].getP2(),
                     referenceVectors[i].getP1());
+        }
+
+        this.targetDiff        = new Line2D[targetVectors.length];
+        for (int i = 0; i < referenceDiff.length; ++i) {
+            targetDiff[i] = subtract(
+                    targetVectors[i].getP2(),
+                    targetVectors[i].getP1());
         }
         
         this.a = a;
@@ -139,22 +139,26 @@ public class Warping extends AbstractFilter {
     //@FIXME nao faz nada, alem de calcular u e v =(
     public Point2D comesFrom (Point2D start, int i) {
         
-        Point2D pd = referenceVectors[i].getP1();
+        Point2D pd = targetVectors[i].getP1();
         Line2D perpendicular = null;
 
         double u = internProduct(
-                        subtract(start, targetVectors[i].getP1()),
+                        subtract(start, referenceVectors[i].getP1()),
                         referenceDiff[i]);
         
         //normalizando o u:
-        u /= targetVectors[i].getP2().distanceSq(targetVectors[i].getP1());        
+        u /= referenceVectors[i].getP2().distanceSq(referenceVectors[i].getP1());        
         
-        double v = targetVectors[i].ptLineDist(start);
-        v *= targetVectors[i].relativeCCW(start);
-       
-        perpendicular = new Line2D.Double
+        double v = referenceVectors[i].ptLineDist(start);
+        v *= referenceVectors[i].relativeCCW(start);
+        
+        if(v > 0)       
+            perpendicular = new Line2D.Double
                     ( 0, 0, targetDiff[i].getY2(), -1 * targetDiff[i].getX2() );
-                   
+        else
+            perpendicular = new Line2D.Double
+                    ( 0, 0, -1 * targetDiff[i].getY2(), targetDiff[i].getX2() );
+            
         double normap = norma( perpendicular );        
         Line2D unitario = unitarizacao(perpendicular, normap);
 
@@ -173,8 +177,8 @@ public class Warping extends AbstractFilter {
     	Point2D destinoProvisorio = comesFrom(start, i);
     	
     	Point2D di = new Point2D.Double( subtract(destinoProvisorio, start).getX2(), subtract(destinoProvisorio, start).getY2() );
-    	double dist = targetVectors[i].ptSegDist(start);
-    	double lenght = norma(targetVectors[i]);
+    	double dist = referenceVectors[i].ptSegDist(start);
+    	double lenght = norma(referenceVectors[i]);
     	
     	double weight = Math.pow( Math.pow(lenght, p) / (a + dist) , b );   
     	
@@ -213,7 +217,7 @@ public class Warping extends AbstractFilter {
 
             	Point2D start = new Point2D.Double(i, j);
             	
-            	for (int k = 0; k < targetVectors.length; k++) {
+            	for (int k = 0; k < referenceVectors.length; k++) {
 					//atualiza o dsum e o weightsum para cada vetor
             		doWeight(start, k);
             	

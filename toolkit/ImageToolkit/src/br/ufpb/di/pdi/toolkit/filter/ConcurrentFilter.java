@@ -91,4 +91,13 @@ public abstract class ConcurrentFilter extends AbstractFilter
 
     }
 
+    public abstract void applyFilter(ColorComponent dest,
+                                     ColorComponent source,
+                                     int xi,
+                                     int width,
+                                     int yi,
+                                     int height);
+
+
+
 }
