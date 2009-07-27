@@ -35,7 +35,7 @@ public class MainWindow extends JFrame implements MouseListener, ShutdownListene
 
     public ImageViewer icon;
     //JLabel label;
-    ImagePanel imShow;
+    public ImagePanel imShow;
     MainMenu  mainMenu;
     MainMenuPopup popup;
     MainMenuBar bar;
@@ -123,6 +123,8 @@ public class MainWindow extends JFrame implements MouseListener, ShutdownListene
         
         if (target.red.getValueArray() == null)
             target.createRGBFromImage();
+
+        source.recalculateBorderMedian();
 
         //filtrando algo em YUV.
         if ((mask & AbstractFilter.YUV) != 0x00) {

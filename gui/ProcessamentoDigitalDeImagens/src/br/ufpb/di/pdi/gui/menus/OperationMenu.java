@@ -20,6 +20,7 @@ public class OperationMenu extends JMenu {
         super("Operações");
         this.father = father;
         add(new DissolveMenu(father));
+
     }
 
 }

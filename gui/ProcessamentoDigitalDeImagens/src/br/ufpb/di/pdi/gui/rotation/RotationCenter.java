@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 
@@ -171,6 +172,10 @@ public class RotationCenter implements Icon {
 
     private Color getForeground () {
         return foreground;
+    }
+
+    public Point2D asPoint () {
+        return new Point(myPosition.y, myPosition.x);
     }
 
 

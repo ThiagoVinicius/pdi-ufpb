@@ -20,6 +20,7 @@ public class MainMenuBar extends JMenuBar {
         add(new FilterMenu(father));
         add(new NoiseMenu(father));
         add(new OperationMenu(father));
+        add(new RotationMenu(father));
         add(new AboutMenu());
     }
 
