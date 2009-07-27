@@ -19,6 +19,8 @@ import br.ufpb.di.pdi.toolkit.filter.StandardDeviation;
 import br.ufpb.di.pdi.toolkit.test.util.Timer;
 import br.ufpb.di.pdi.toolkit.topologic.Rotation;
 import br.ufpb.di.pdi.toolkit.topologic.Scale;
+import br.ufpb.di.pdi.toolkit.topologic.Warping;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.util.logging.Logger;
@@ -213,37 +215,37 @@ public class FilterTest extends TestCase {
 //        }
 //    }
 
-    public void testRotation () throws Exception {
-
-        for (File i : FILENAMES) {
-
-            System.out.println("Processando rotacao em: "+i);
-
-            ImageWrapper original = readImage(i);
-
-            Rotation filter = new Rotation(
-                    new Point2D[] {
-                        new Point2D.Double(original.height-200, original.width-200),
-                        new Point2D.Double(200, 200)
-
-
-                    },
-                    original.width, original.height);
-
-            filter.setThetaType(Rotation.LINEAR_THETA);
-            filter.setA(0.5);
-            filter.setB(-1.0);
-
-
-            applyRGBFilter(filter, original);
-//            applyDebugRGBFilter(filter, original);
-
-            writeImage(original, new File (i.getName()+" rotacao.png"));
-
-            System.out.println("----- ----- ----- ----- -----");
-
-        }
-    }
+//    public void testRotation () throws Exception {
+//
+//        for (File i : FILENAMES) {
+//
+//            System.out.println("Processando rotacao em: "+i);
+//
+//            ImageWrapper original = readImage(i);
+//
+//            Rotation filter = new Rotation(
+//                    new Point2D[] {
+//                        new Point2D.Double(original.height-200, original.width-200),
+//                        new Point2D.Double(200, 200)
+//
+//
+//                    },
+//                    original.width, original.height);
+//
+//            filter.setThetaType(Rotation.LINEAR_THETA);
+//            filter.setA(0.5);
+//            filter.setB(-1.0);
+//
+//
+//            applyRGBFilter(filter, original);
+////            applyDebugRGBFilter(filter, original);
+//
+//            writeImage(original, new File (i.getName()+" rotacao.png"));
+//
+//            System.out.println("----- ----- ----- ----- -----");
+//
+//        }
+//    }
 
 //    public void testZoom2x () throws Exception {
 //
@@ -286,34 +288,61 @@ public class FilterTest extends TestCase {
 //
 //    }
 
-    public void testZoom2x () throws Exception {
+//    public void testZoom2x () throws Exception {
+//
+//        for (File i : FILENAMES) {
+//
+//            System.out.println("Processando escala em: "+i);
+//
+//            ImageWrapper original = readImage(i);
+//            ImageWrapper result   = new ImageWrapper(160, 120);
+//
+//            original.createRGBFromImage();
+//
+//            Scale filter = new Scale(160, 120);
+//
+//            filter.applyFilter(result, original, AbstractFilter.RGB);
+//
+//            result.updateImageFromRGB(ImageWrapper.RED | ImageWrapper.GREEN | ImageWrapper.BLUE);
+//
+//
+//
+//            //applyRGBFilter(filter, original);
+//            //applyDebugRGBFilter(filter, original);
+//
+//            writeImage(result, new File (i.getName()+" escala 160 120.png"));
+//
+//            System.out.println("----- ----- ----- ----- -----");
+//
+//        }
+//
+//    }
+
+        public void testWarping () throws Exception {
 
         for (File i : FILENAMES) {
 
-            System.out.println("Processando escala em: "+i);
+            System.out.println("Processando warping em: "+i);
 
             ImageWrapper original = readImage(i);
-            ImageWrapper result   = new ImageWrapper(160, 120);
 
-            original.createRGBFromImage();
+            Warping filter = new Warping(
+                    new Line2D[] { new Line2D.Double(50, 50, 100, 50) },
+                    new Line2D[] { new Line2D.Double(50, 50, 75, 75) },
+                    0, 2, 0
 
-            Scale filter = new Scale(160, 120);
-
-            filter.applyFilter(result, original, AbstractFilter.RGB);
-
-            result.updateImageFromRGB(ImageWrapper.RED | ImageWrapper.GREEN | ImageWrapper.BLUE);
+                    );
 
 
+            applyRGBFilter(filter, original);
+//            applyDebugRGBFilter(filter, original);
 
-            //applyRGBFilter(filter, original);
-            //applyDebugRGBFilter(filter, original);
-
-            writeImage(result, new File (i.getName()+" escala 160 120.png"));
+            writeImage(original, new File (i.getName()+" warping.png"));
 
             System.out.println("----- ----- ----- ----- -----");
 
         }
-
     }
+
 
 }

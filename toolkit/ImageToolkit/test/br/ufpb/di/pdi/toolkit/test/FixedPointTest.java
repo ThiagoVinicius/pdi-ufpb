@@ -12,6 +12,7 @@ import junit.framework.TestCase;
  *
  * @author thiago
  */
+@Deprecated
 public class FixedPointTest extends TestCase {
 
     public static final int RANGE = 1000 ;
