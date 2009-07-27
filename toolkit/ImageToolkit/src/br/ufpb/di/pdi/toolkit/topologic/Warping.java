@@ -101,10 +101,12 @@ public class Warping extends AbstractFilter {
     
     private static final double norma(Line2D l) {
     	
-    	double a = l.getX2() - l.getX1();
-    	double b = l.getY2() - l.getY1();
+//    	double a = l.getX2() - l.getX1();
+//    	double b = l.getY2() - l.getY1();
+
+       return l.getP2().distance(l.getP1());
     	
-    	return Math.sqrt( (a * a) + (b * b) );
+//    	return Math.sqrt( (a * a) + (b * b) );
     	
     }
     
@@ -153,7 +155,7 @@ public class Warping extends AbstractFilter {
         
         double v = referenceVectors[i].ptLineDist(start);
         v *= referenceVectors[i].relativeCCW(start);
-        
+
         Point2D p1 = multiplica(u, targetDiff[i]).getP2();
         Point2D p2 = multiplica(v, unitario).getP2();
         
@@ -168,7 +170,7 @@ public class Warping extends AbstractFilter {
     	Point2D destinoProvisorio = comesFrom(start, i);
     	
     	Point2D di = new Point2D.Double( subtract(destinoProvisorio, start).getX2(), subtract(destinoProvisorio, start).getY2() );
-    	double dist = referenceVectors[i].ptLineDist(start);
+    	double dist = referenceVectors[i].ptSegDist(start);
     	double lenght = norma(referenceVectors[i]);
     	
     	double weight = Math.pow( Math.pow(lenght, p) / (a + dist) , b );   
@@ -202,6 +204,7 @@ public class Warping extends AbstractFilter {
             for (int j = xi; j < jMax; ++j) {
 
                 dsum = new Point2D.Double(0.0, 0.0);
+                weightsum = 0.0;
 
             	Point2D start = new Point2D.Double(i, j);
             	
@@ -214,7 +217,7 @@ public class Warping extends AbstractFilter {
             	Point2D destino = new Point2D.Double
             		(start.getX() + divide(weightsum, dsum).getX(), start.getY() + divide(weightsum, dsum).getY());
 
-                System.out.printf("(%d %d) - >(%.1f %.1f)\n", (int) start.getX(), (int) start.getY(), destino.getX(), destino.getY());
+//                System.out.printf("(%d %d) - >(%.1f %.1f)\n", (int) start.getX(), (int) start.getY(), destino.getX(), destino.getY());
             	
             	destination[row+j] = source.get((float)destino.getX(), (float)destino.getY());
             }
