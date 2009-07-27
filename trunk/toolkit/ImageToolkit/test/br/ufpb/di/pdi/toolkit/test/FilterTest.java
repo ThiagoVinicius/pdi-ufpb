@@ -327,8 +327,8 @@ public class FilterTest extends TestCase {
             ImageWrapper original = readImage(i);
 
             Warping filter = new Warping(
-                    new Line2D[] { new Line2D.Double(50, 50, 200, 50) },
-                    new Line2D[] { new Line2D.Double(50, 50, 50, 200) },
+                    new Line2D[] { new Line2D.Double(0, 0, 100, 0) },
+                    new Line2D[] { new Line2D.Double(0, 0, 100, 0) },
                     1, 2, 1
 
                     );
