@@ -10,13 +10,14 @@ import java.awt.geom.Point2D;
 import java.security.InvalidParameterException;
 
 import br.ufpb.di.pdi.toolkit.ColorComponent;
+import br.ufpb.di.pdi.toolkit.filter.AbstractFilter;
 import br.ufpb.di.pdi.toolkit.filter.ConcurrentFilter;
 
 /**
  *
  * @author thiago
  */
-public class Warping extends ConcurrentFilter{
+public class Warping extends AbstractFilter {
 
     private final Line2D referenceVectors[];
     private final Line2D targetVectors[];
@@ -199,7 +200,9 @@ public class Warping extends ConcurrentFilter{
         for (int i = yi; i < iMax; ++i) {
             row = i*width;
             for (int j = xi; j < jMax; ++j) {
-            	
+
+                dsum = new Point2D.Double(0.0, 0.0);
+
             	Point2D start = new Point2D.Double(i, j);
             	
             	for (int k = 0; k < referenceVectors.length; k++) {
@@ -210,11 +213,18 @@ public class Warping extends ConcurrentFilter{
             	
             	Point2D destino = new Point2D.Double
             		(start.getX() + divide(weightsum, dsum).getX(), start.getY() + divide(weightsum, dsum).getY());
+
+                System.out.printf("(%d %d) - >(%.1f %.1f)\n", (int) start.getX(), (int) start.getY(), destino.getX(), destino.getY());
             	
             	destination[row+j] = source.get((float)destino.getX(), (float)destino.getY());
             }
         }	
 		
 	}
+
+    @Override
+    public void applyFilter(ColorComponent dest, ColorComponent source) {
+        applyFilter(dest, source, 0, dest.width, 0, dest.heigth);
+    }
 	
 }
