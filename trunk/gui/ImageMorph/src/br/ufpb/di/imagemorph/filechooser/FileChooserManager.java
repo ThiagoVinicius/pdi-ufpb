@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -18,6 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.plaf.basic.BasicFileChooserUI;
 
 /**
  *
@@ -74,6 +77,50 @@ public class FileChooserManager {
 
         //Reset the file chooser for the next time it's shown.
         fc.setSelectedFile(null);
+    }
+
+    public static File getFolder () {
+
+        while (true) {
+
+
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            fc.setAcceptAllFileFilterUsed(true);
+            int returnVal = show();
+
+            //Process the results.
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                boolean goodToGo = true;
+                System.out.println(fc.isDirectorySelectionEnabled());
+                System.out.println(Arrays.toString(file.listFiles()));
+                if (!file.exists() || !file.isDirectory() || file.listFiles().length != 0) {
+                    JOptionPane.showMessageDialog(null,
+                            "O diretório selecionado nao pode ser usado, por um dos seguintes motivos:\n" +
+                            "- O diretório nao existe\n" +
+                            "- Você selecionou algo que não é um diretório\n" +
+                            "- O diretório selecionado não está vazio.",
+                            "Ooops!", JOptionPane.ERROR_MESSAGE);
+                    goodToGo = false;
+                }
+                if (goodToGo) {
+                    break;
+                }
+            } else {
+                break;
+            }
+
+
+        }
+
+        File result = fc.getSelectedFile();
+
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        fc.setSelectedFile(null);
+        return result;
+
     }
 
     public static void save (BufferedImage image) throws IOException {

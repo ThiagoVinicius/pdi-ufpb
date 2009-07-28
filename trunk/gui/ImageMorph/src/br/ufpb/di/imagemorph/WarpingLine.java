@@ -169,4 +169,16 @@ public class WarpingLine implements Icon {
         return brother;
     }
 
+    public Line2D asLine2D () {
+
+        //trocando x por y, para a biblioteca ImageWrapper
+        float x1 = (float) myPosition.getY1();
+        float y1 = (float) myPosition.getX1();
+        float x2 = (float) myPosition.getY2();
+        float y2 = (float) myPosition.getX2();
+
+        return new Line2D.Float(x1, y1, x2, y2);
+
+    }
+
 }

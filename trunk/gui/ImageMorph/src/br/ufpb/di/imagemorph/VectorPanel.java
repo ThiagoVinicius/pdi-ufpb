@@ -6,9 +6,11 @@
 package br.ufpb.di.imagemorph;
 
 import br.ufpb.di.imagemorph.filechooser.FileChooserManager;
+import com.sun.org.apache.xml.internal.serialize.LineSeparator;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.Icon;
@@ -27,8 +29,7 @@ public class VectorPanel extends JPanel implements ActionListener {
 
     public ImageLabel image;
     public File file;
-    JButton open, clear;
-    JToggleButton borders;
+    JButton open, clear, borders;
 
     VectorPanel anotherOne;
 
@@ -50,7 +51,9 @@ public class VectorPanel extends JPanel implements ActionListener {
         open = new JButton("Carregar imagem");
         open.addActionListener(this);
         clear = new JButton("Limpar vetores");
-        borders = new JToggleButton("Vetores nas bordas");
+        clear.addActionListener(this);
+        borders = new JButton("Vetores nas bordas");
+        borders.addActionListener(this);
 
         panel1.add(open);
         panel1.add(clear);
@@ -77,7 +80,12 @@ public class VectorPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == open) {
             FileChooserManager.open(this);
+        } else if (e.getSource() == borders) {
+            image.addLinesOnBorders();
+        } else if (e.getSource() == clear) {
+            image.clearLines();
         }
+
     }
 
     private void initImage(Icon newImage) {
