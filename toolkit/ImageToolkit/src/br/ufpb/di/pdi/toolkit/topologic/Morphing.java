@@ -43,7 +43,7 @@ public class Morphing {
         this.inicioDissolve = inicioD;
         this.nquadrosDissolve = fimD - inicioD;
 
-        this.passoDissolve = 1 / (fimD - inicioD);
+        this.passoDissolve = 1.0 / (fimD - inicioD);
 
         passoPX = new double[referenceVectors.length];
         passoPY = new double[referenceVectors.length];
@@ -63,14 +63,15 @@ public class Morphing {
     
     private Line2D[] getCurrentTargetVectors(int index){
         
-        Line2D[] vectors = new Line2D[targetVectors.length];
+        Line2D[] vectors = new Line2D[referenceVectors.length];
         
         for (int i = 0; i < vectors.length; i++) {
             
-            vectors[i] = new Line2D.Double( targetVectors[i].getX1() + ( index * passoPX[i] ),
-                    targetVectors[i].getY1() + ( index * passoPY[i] ),
-                    targetVectors[i].getX2() + ( index * passoQX[i] ),
-                    targetVectors[i].getY2() + ( index * passoQY[i] ) );
+            vectors[i] = new Line2D.Double(
+                    referenceVectors[i].getX1() + ( index * passoPX[i] ),
+                    referenceVectors[i].getY1() + ( index * passoPY[i] ),
+                    referenceVectors[i].getX2() + ( index * passoQX[i] ),
+                    referenceVectors[i].getY2() + ( index * passoQY[i] ) );
             
         }
         
@@ -83,7 +84,7 @@ public class Morphing {
         if (im1.width != im2.width || im1.height != im2.height)
             throw new WrongImageSizeException();
 
-        ImageWrapper result = new ImageWrapper(im1.width, im2.width);
+        ImageWrapper result = new ImageWrapper(im1.width, im1.height);
 
         result.red  .imitate(getQuadro(im1.red  , im2.red  , index));
         result.green.imitate(getQuadro(im1.green, im2.green, index));
@@ -102,11 +103,12 @@ public class Morphing {
         Warping warp1 = null;
         Warping warp2 = null;
         
-        Line2D[] currentTargetVector = getCurrentTargetVectors(index);
+        Line2D[] target1 = getCurrentTargetVectors(index);
+        //Line2D[] target2 = getCurrentTargetVectors(nquadros - index -1);
         
         if(index < inicioDissolve + nquadrosDissolve){
         
-            warp1 = new Warping(currentTargetVector, referenceVectors, a, b, p);
+            warp1 = new Warping(target1, referenceVectors, a, b, p);
             imr1 = new ColorComponent(im1.width, im1.heigth);
             warp1.applyFilter(imr1, im1);
             
@@ -114,9 +116,9 @@ public class Morphing {
         
         if(index > inicioDissolve){
         
-            warp2 = new Warping(currentTargetVector, referenceVectors, a, b, p);
+            warp2 = new Warping(target1, targetVectors, a, b, p);
             imr2 = new ColorComponent(im2.width, im2.heigth);
-            warp1.applyFilter(imr2, im2);
+            warp2.applyFilter(imr2, im2);
         
         }
         

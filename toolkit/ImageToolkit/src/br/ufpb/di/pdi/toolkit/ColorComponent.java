@@ -188,7 +188,7 @@ public class ColorComponent implements Cloneable {
     public void imitate (ColorComponent anotherGuy) throws WrongImageSizeException {
 
         if (width != anotherGuy.width || heigth != anotherGuy.heigth)
-            throw new InvalidParameterException("Tamanhos nao batem");
+            throw new WrongImageSizeException();
 
         if (anotherGuy.values != null)
             setValueArray(anotherGuy.values.clone());
