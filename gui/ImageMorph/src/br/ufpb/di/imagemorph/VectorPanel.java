@@ -6,20 +6,14 @@
 package br.ufpb.di.imagemorph;
 
 import br.ufpb.di.imagemorph.filechooser.FileChooserManager;
-import com.sun.org.apache.xml.internal.serialize.LineSeparator;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Line2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JToggleButton;
 
 /**
  *
