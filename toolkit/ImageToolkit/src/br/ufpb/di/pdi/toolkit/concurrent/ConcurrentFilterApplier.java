@@ -6,9 +6,6 @@
 package br.ufpb.di.pdi.toolkit.concurrent;
 
 import br.ufpb.di.pdi.toolkit.ColorComponent;
-import br.ufpb.di.pdi.toolkit.ImageWrapper;
-import br.ufpb.di.pdi.toolkit.concurrent.ConcurrentManager;
-import br.ufpb.di.pdi.toolkit.filter.AreaFilter;
 import br.ufpb.di.pdi.toolkit.filter.ConcurrentFilter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Semaphore;

@@ -6,7 +6,6 @@
 package br.ufpb.di.pdi.toolkit.filter;
 
 import br.ufpb.di.pdi.toolkit.ColorComponent;
-import br.ufpb.di.pdi.toolkit.ImageWrapper;
 
 /**
  *
@@ -43,6 +42,7 @@ public class Negative extends ConcurrentPointyFilter {
 
     }
 
+    @Override
     public String toString () {
         return "Negativo";
     }

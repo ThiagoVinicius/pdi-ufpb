@@ -6,10 +6,7 @@
 package br.ufpb.di.pdi.toolkit.topologic;
 
 import br.ufpb.di.pdi.toolkit.ColorComponent;
-import br.ufpb.di.pdi.toolkit.filter.AbstractFilter;
 import br.ufpb.di.pdi.toolkit.filter.ConcurrentFilter;
-import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Float;
 import java.security.InvalidParameterException;
 
 /**

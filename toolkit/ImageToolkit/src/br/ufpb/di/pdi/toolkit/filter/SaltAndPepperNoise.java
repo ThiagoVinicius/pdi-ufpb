@@ -20,10 +20,12 @@ public class SaltAndPepperNoise extends AbstractFilter{
 	}
 	
 
+    @Override
 	public void applyFilter (ImageWrapper target, int mask) {
         applyFilter(target, target, mask);
     }
 	
+    @Override
 	public void applyFilter (ColorComponent target) {
         applyFilter(target, target);
     }
@@ -48,6 +50,7 @@ public class SaltAndPepperNoise extends AbstractFilter{
 		
 	}
 
+    @Override
     public String toString () {
         return String.format("Sal e pimenta: %.2f", prob);
     }
