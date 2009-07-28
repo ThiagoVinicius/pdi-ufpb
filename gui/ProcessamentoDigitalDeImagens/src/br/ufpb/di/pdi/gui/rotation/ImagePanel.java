@@ -46,6 +46,11 @@ public class ImagePanel extends JLabel
         init(icon);
     }
 
+    public void clearCenters() {
+        points.clear();
+        repaint();
+    }
+
     public Point2D[] getPoints() {
         Point2D result[] = new Point2D[points.size()];
         for (int i = 0; i < points.size(); ++i) {
