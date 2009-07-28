@@ -7,14 +7,12 @@ package br.ufpb.di.pdi.toolkit;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import br.ufpb.di.pdi.toolkit.exception.WrongImageSizeException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 /**
  *

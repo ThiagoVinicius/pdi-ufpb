@@ -7,7 +7,6 @@ package br.ufpb.di.pdi.toolkit;
 
 import br.ufpb.di.pdi.toolkit.exception.WrongImageSizeException;
 import br.ufpb.di.pdi.toolkit.filter.Median;
-import java.security.InvalidParameterException;
 import java.util.Arrays;
 
 /**

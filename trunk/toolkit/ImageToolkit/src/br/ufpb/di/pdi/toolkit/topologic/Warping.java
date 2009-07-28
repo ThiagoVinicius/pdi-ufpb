@@ -10,15 +10,13 @@ import java.awt.geom.Point2D;
 import java.security.InvalidParameterException;
 
 import br.ufpb.di.pdi.toolkit.ColorComponent;
-import br.ufpb.di.pdi.toolkit.filter.AbstractFilter;
 import br.ufpb.di.pdi.toolkit.filter.ConcurrentFilter;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 /**
  *
  * @author thiago
  */
-public class Warping extends AbstractFilter {
+public class Warping extends ConcurrentFilter {
 
     private final Line2D targetVectors[];
     private final Line2D referenceVectors[];
@@ -230,9 +228,4 @@ public class Warping extends AbstractFilter {
 		
 	}
 
-    @Override
-    public void applyFilter(ColorComponent dest, ColorComponent source) {
-        applyFilter(dest, source, 0, dest.width, 0, dest.heigth);
-    }
-	
 }

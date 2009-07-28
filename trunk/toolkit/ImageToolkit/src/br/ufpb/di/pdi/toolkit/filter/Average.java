@@ -6,7 +6,6 @@
 package br.ufpb.di.pdi.toolkit.filter;
 
 import br.ufpb.di.pdi.toolkit.ColorComponent;
-import java.util.Arrays;
 
 /**
  *

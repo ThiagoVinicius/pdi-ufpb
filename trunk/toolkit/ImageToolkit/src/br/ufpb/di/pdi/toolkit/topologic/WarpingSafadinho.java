@@ -10,15 +10,13 @@ import java.awt.geom.Point2D;
 import java.security.InvalidParameterException;
 
 import br.ufpb.di.pdi.toolkit.ColorComponent;
-import br.ufpb.di.pdi.toolkit.filter.AbstractFilter;
 import br.ufpb.di.pdi.toolkit.filter.ConcurrentFilter;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 /**
  *
  * @author thiago
  */
-public class WarpingSafadinho extends AbstractFilter {
+public class WarpingSafadinho extends ConcurrentFilter {
 
     private final Line2D referenceVectors[];
     private final Line2D targetVectors[];
@@ -234,9 +232,4 @@ public class WarpingSafadinho extends AbstractFilter {
 		
 	}
 
-    @Override
-    public void applyFilter(ColorComponent dest, ColorComponent source) {
-        applyFilter(dest, source, 0, dest.width, 0, dest.heigth);
-    }
-	
 }
