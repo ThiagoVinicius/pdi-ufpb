@@ -83,6 +83,68 @@ public class ImageLabel extends JLabel
 
     }
 
+    public void clearLines () {
+        this.lines.clear();
+        theOtherGuy.lines.clear();
+        repaint();
+    }
+
+    public void addLinesOnBorders () {
+        addBorderLines(this, theOtherGuy);
+    }
+
+    public Line2D[] getLines () {
+        Line2D result[] = new Line2D[lines.size()];
+
+        for (int i = 0; i < result.length; ++i) {
+            result[i] = lines.get(i).asLine2D();
+        }
+
+        return result;
+    }
+
+    private static void addBorderLines (ImageLabel guy, ImageLabel dude) {
+
+        WarpingLine north1 = new WarpingLine();
+        WarpingLine north2 = new WarpingLine(north1);
+        north1.setLineStart(0, 0);
+        north2.setLineStart(0, 0);
+        north1.setLineEnd  (guy .getIcon().getIconWidth(), 0);
+        north2.setLineEnd  (dude.getIcon().getIconWidth(), 0);
+        guy .lines.add(north1);
+        dude.lines.add(north2);
+
+        WarpingLine east1 = new WarpingLine();
+        WarpingLine east2 = new WarpingLine(east1);
+        east1.setLineStart(guy .getIcon().getIconWidth(), 0);
+        east2.setLineStart(dude.getIcon().getIconWidth(), 0);
+        east1.setLineEnd  (guy .getIcon().getIconWidth(), guy .getIcon().getIconHeight());
+        east2.setLineEnd  (dude.getIcon().getIconWidth(), dude.getIcon().getIconHeight());
+        guy .lines.add(east1);
+        dude.lines.add(east2);
+
+        WarpingLine south1 = new WarpingLine();
+        WarpingLine south2 = new WarpingLine(south1);
+        south1.setLineStart(guy .getIcon().getIconWidth(), guy .getIcon().getIconHeight());
+        south2.setLineStart(dude.getIcon().getIconWidth(), dude.getIcon().getIconHeight());
+        south1.setLineEnd  (0, guy .getIcon().getIconHeight());
+        south2.setLineEnd  (0, dude.getIcon().getIconHeight());
+        guy .lines.add(south1);
+        dude.lines.add(south2);
+
+        WarpingLine west1 = new WarpingLine();
+        WarpingLine west2 = new WarpingLine(west1);
+        west1.setLineStart(0, guy .getIcon().getIconHeight());
+        west2.setLineStart(0, dude.getIcon().getIconHeight());
+        west1.setLineEnd  (0, 0);
+        west2.setLineEnd  (0, 0);
+        guy .lines.add(west1);
+        dude.lines.add(west2);
+
+        guy.repaint();
+
+    }
+
     @Override
     public void setIcon(Icon icon) {
         super.setIcon(icon);
@@ -200,9 +262,6 @@ public class ImageLabel extends JLabel
             i.setSelected(false);
 
             if (theNewChosenOne == null) {
-
-                if (i == null || i.myPosition == null)
-                    System.out.print("");
 
                 if (i.myPosition.ptSegDist(lastKnownMousePosition) < 10) {
                     theNewChosenOne = i;
