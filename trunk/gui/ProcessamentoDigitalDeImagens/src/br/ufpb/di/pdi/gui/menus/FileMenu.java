@@ -32,6 +32,7 @@ public class FileMenu extends JMenu {
         JMenuItem item1;
         JMenuItem item2;
         JMenuItem item3;
+        JMenuItem item4;
 
 
         item1 = new JMenuItem("Abrir");
@@ -48,6 +49,14 @@ public class FileMenu extends JMenu {
         item2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 father.save();
+            }
+        });
+
+        item4 = new JMenuItem("Apagar centros de rotação");
+        add(item4);
+        item4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                father.imShow.clearCenters();
             }
         });
 
