@@ -7,9 +7,9 @@ def func1(): # I'm an endline comment
 
     'Boo, identation matters!' # this is a function documentation string
 
-    print 'I'm func1!'
+    print "I'm func1!"
     def func2():
-        print 'Im func2, and I live inside func1 o.O'
+        print "Im func2, and I live inside func1 o.O"
     func2()
 
 func1() #just invoking something called func1
