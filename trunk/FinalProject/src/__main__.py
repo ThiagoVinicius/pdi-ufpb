@@ -14,6 +14,8 @@ import ImageChops
 import ImageOps
 import ImageEnhance
 
+import borderwalker
+
 camera = highgui.cvCreateCameraCapture(0)
 
 print highgui.cvSetCaptureProperty(camera, highgui.CV_CAP_PROP_FRAME_HEIGHT, 640)
@@ -90,18 +92,31 @@ while True:
 
     im = im.convert('L')
 
+    #                              x <= 127 ? 0 : 255
+
     im = Image.eval(im, (lambda x: 0 if x <= 127 else 255))
-    
+    #im = Image.eval(im, (lambda x: x-50))
+
+    #borderwalker.walk(im, (0,0))
+
+    border = borderwalker.nemo(im)
+
     im = Image.merge('RGB', (im, im, im))
     #im = im.filter(ImageFilter.SMOOTH)
     
     pg_img = pygame.image.frombuffer(im.tostring(), im.size, im.mode)
     screen.fill((0,0,0))
     screen.blit(pg_img, (0,0))
+
+    print len(border)
+
+    borderwalker.draw(border, screen)
     
     #marker = get_marker(im)
     #marker.draw(screen)
     #print marker
+
+
     
     pygame.display.flip()
     oldim = thisim
