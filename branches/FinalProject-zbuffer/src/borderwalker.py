@@ -2,6 +2,7 @@
 __author__="Thiago"
 __date__ ="$08/08/2009 12:29:48$"
 
+import Image
 import pygame.draw
 
 _BORDER = (
@@ -73,8 +74,9 @@ def walk (im, pos, zbuffer, came_from=WEST):
             if (out_of_im(x, y)):
                 continue
             if data[index] < 128:
-                border.append((x, y))
-                zbuffer[index] = False
+                #border.append((x, y))
+                border += ((x, y), )
+                #zbuffer[index] = None
                 xc, yc = x, y
                 _came_from = (look_now + 4) % 8
                 break
@@ -106,15 +108,8 @@ def nemo (im, line_increment=1):
     data = im.getdata()
     w, h = im.size
 
-    zbuffer = [] #array.array('b')
+    zbuffer = { }
     a_lot_of_borders = []
-
-    i = 0
-    WH = w*h
-    while i < WH:
-        zbuffer.append(True)
-        i += 1
-    del i, WH
 
     i = 0
     while i < h-1:
@@ -122,9 +117,10 @@ def nemo (im, line_increment=1):
         while j < w-1:
             pos = i*w + j
             if data[pos] >= 128:
-                if data[pos+1] < 128 and zbuffer[pos+1]:
+                if data[pos+1] < 128 and pos+1 not in zbuffer:
                     #print 'oie!!'
                     a_lot_of_borders.append(walk(im, (i, j), zbuffer))
+                    return a_lot_of_borders
             j += 1
         i += line_increment
 
