@@ -110,8 +110,8 @@ while True:
 
     print len(border)
 
-    for i in border:
-        borderwalker.draw(i, screen)
+    #for i in border:
+    #    borderwalker.draw(i, screen)
     
     #marker = get_marker(im)
     #marker.draw(screen)
