@@ -108,7 +108,7 @@ while True:
     screen.fill((0,0,0))
     screen.blit(pg_img, (0,0))
 
-    print len(border)
+    print len(border), border
 
     borderwalker.draw(border, screen)
     
