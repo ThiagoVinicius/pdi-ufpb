@@ -3,6 +3,7 @@ __author__="Thiago"
 __date__ ="$08/08/2009 12:29:48$"
 
 import pygame.draw
+import numpy
 from math import sqrt
 
 _BORDER = (
@@ -75,7 +76,7 @@ class border (list):
         if abs(ang - self._line_cos) < 0.25:
             self._tmp_list.append(point)
         else:
-            self.append(point)
+            self.append(self._tmp_list[(_LIST_LEN-1)//2])
             self._tmp_list = [point]
             self.push_point = self._fill_first
 
@@ -89,7 +90,7 @@ im = uma imagem PIL
 pos = uma tupla de dois, contendo as coordenadas x,y na imagem
 
 '''
-def walk (im, pos, came_from=WEST):
+def walk (im, pos, zbuffer, came_from=WEST):
     xi, yi = pos
     data = im.getdata()
 
@@ -121,6 +122,7 @@ def walk (im, pos, came_from=WEST):
             if data[x*w + y] < 128:
                 #this_border.append((x, y))
                 this_border.push_point(point((x, y)))
+                zbuffer[x*w + y] = False
                 xc, yc = x, y
                 _came_from = (look_now + 4) % 8
                 break
@@ -134,12 +136,17 @@ def walk (im, pos, came_from=WEST):
     return this_border
 
 
-def nemo (im, line_increment=1):
+#_ZBUFFER = numpy.ones(320*240, dtype=bool)
+
+def nemo (im, line_increment=10):
 
     data = im.getdata()
     w, h = im.size
 
     #print w, h
+    zbuffer = numpy.ones(w*h, dtype=bool)
+
+    a_lot_of_borders = []
 
     i = 0
 
@@ -149,24 +156,35 @@ def nemo (im, line_increment=1):
             if data[i*w + j] >= 128:
                 j += 1
                 if data[i*w + j] < 128:
+                    if zbuffer[i*w + j]:
                     #print 'oie!!'
                     #tmp = walk(im, (i, j))
                     #tmp.pop(len(tmp)-1)
-                    return walk(im, (i, j))
+                        a_lot_of_borders.append(walk(im, (i, j), zbuffer))
                 j -= 1
             j += 1
         i += line_increment
 
-    return []
+    return a_lot_of_borders
 
 
-def draw (border, surface, xi = 0, yi = 0):
-        red = (255, 0, 0)
-        try:
-            for i in border:
-                    pygame.draw.circle(surface, red, (i[1], i[0]), 5, 0)
-        except:
-            pass
+def draw_points (border, surface, xi = 0, yi = 0):
+    red = (255, 0, 0)
+    try:
+       for i in border:
+           pygame.draw.circle(surface, red, (i[1], i[0]), 5, 0)
+    except:
+        pass
+
+def draw_quads (border, surface, xi = 0, yi = 0):
+    green = (0, 255, 0)
+    try:
+       #print 'boo:', len(i)
+       if len(border) == 4:
+           points = [(i.y, i.x) for i in border]
+           pygame.draw.polygon(surface, green, points, 3)
+    except:
+        pass
 
 if __name__ == "__main__":
     print "Hello";

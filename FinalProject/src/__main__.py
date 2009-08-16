@@ -108,9 +108,11 @@ while True:
     screen.fill((0,0,0))
     screen.blit(pg_img, (0,0))
 
-    print len(border), border
+    print len(border) #, border
 
-    borderwalker.draw(border, screen)
+    for i in border:
+        borderwalker.draw_points(i, screen)
+        borderwalker.draw_quads(i, screen)
     
     #marker = get_marker(im)
     #marker.draw(screen)
