@@ -51,6 +51,13 @@ def _angle(pt0, pt1):
     dy2 = pt2.y - pt0.y;
     return (dx1*dx2 + dy1*dy2)/sqrt((dx1*dx1 + dy1*dy1)*(dx2*dx2 + dy2*dy2) + 1e-10);
 
+def _vec_angle( pt1, pt2, pt0 ):
+    dx1 = pt1.x - pt0.x;
+    dy1 = pt1.y - pt0.y;
+    dx2 = pt2.x - pt0.x;
+    dy2 = pt2.y - pt0.y;
+    return (dx1*dx2 + dy1*dy2)/sqrt((dx1*dx1 + dy1*dy1)*(dx2*dx2 + dy2*dy2) + 1e-10);
+
 print point((1, 2)).x, point((1, 2)).y
 
 print _angle(point((1,1)), point((1,3)))
@@ -59,9 +66,16 @@ _LIST_LEN = 10
 
 class border (list):
 
-    _tmp_list = []
-    _line_cos = 0.0
-    _ignored = 0
+#    _tmp_list = []
+#    _line_cos = 0.0
+#    _ignored = 0
+
+    def __init__(self, seq=[]):
+        list.__init__(seq)
+        self._tmp_list = []
+        self._line_cos = 0.0
+        self.push_point = self._fill_first
+
 
     def _fill_first (self, point):
         if len(self._tmp_list) < _LIST_LEN:
@@ -136,8 +150,6 @@ def walk (im, pos, zbuffer, came_from=WEST):
     return this_border
 
 
-#_ZBUFFER = numpy.ones(320*240, dtype=bool)
-
 def nemo (im, line_increment=10):
 
     data = im.getdata()
@@ -157,9 +169,6 @@ def nemo (im, line_increment=10):
                 j += 1
                 if data[i*w + j] < 128:
                     if zbuffer[i*w + j]:
-                    #print 'oie!!'
-                    #tmp = walk(im, (i, j))
-                    #tmp.pop(len(tmp)-1)
                         a_lot_of_borders.append(walk(im, (i, j), zbuffer))
                 j -= 1
             j += 1
@@ -167,22 +176,99 @@ def nemo (im, line_increment=10):
 
     return a_lot_of_borders
 
+_MAX_INT = (1 << 16) - 1
+def _bbox (poly):
+
+    xmin, ymin = _MAX_INT, _MAX_INT
+    xmax, ymax = 0, 0
+
+    for i in poly:
+        xmin = i.x if i.x < xmin else xmin
+        xmax = i.x if i.x > xmax else xmax
+        ymin = i.x if i.x < ymin else ymin
+        ymax = i.x if i.x > ymax else ymax
+
+    return [point((xmin, ymin)),
+            point((xmin, ymax)),
+            point((xmax, ymin)),
+            point((xmax, ymax))]
+
+'''
+first e second devem ser bounding boxes.
+
+retorna  0, se nem first nem second estao um dentro do outro.
+retorna -1, se first esta dentro de second
+retorna  1, se second esta dentro de first
+'''
+def _is_inside (first, second):
+    pass
+    
+
+
+find_quads = lambda borders: [i for i in borders if len(i) == 4]
+
+def calculate_angles (quad):
+    angles = []
+    i = 0
+    _len = len(quad)
+
+    while i < _len:
+        angles.append(_vec_angle(quad[i-1 % _len], quad[(i+1) % _len], quad[i]))
+        i += 1
+
+    angles.sort()
+    return angles
+
+def get_marker (quads):
+
+    result = []
+
+    angles = map(calculate_angles, quads)
+
+    i = 0
+    while i < len(angles):
+        j = 0
+        while j < len(angles):
+            if i == j:
+                j += 1
+                continue
+            k = 0
+            count = 0
+            while k < 4:
+                if abs(angles[i][k] - angles[j][k]) < 0.1:
+                    count += 1
+                k += 1
+            if count == k:
+                result.append(quads[i])
+            j += 1
+        i += 1
+
+    return result
+
 
 def draw_points (border, surface, xi = 0, yi = 0):
     red = (255, 0, 0)
     try:
        for i in border:
-           pygame.draw.circle(surface, red, (i[1], i[0]), 5, 0)
+           pygame.draw.circle(surface, red, (i[1], i[0]), 3, 1)
     except:
         pass
 
 def draw_quads (border, surface, xi = 0, yi = 0):
     green = (0, 255, 0)
     try:
-       #print 'boo:', len(i)
        if len(border) == 4:
            points = [(i.y, i.x) for i in border]
            pygame.draw.polygon(surface, green, points, 3)
+    except:
+        pass
+
+def draw_marker (border, surface, xi = 0, yi = 0):
+    blue = (0, 0, 255)
+    try:
+       #if len(border) == 4:
+       points = [(i.y, i.x) for i in border]
+       pygame.draw.polygon(surface, blue, points, 3)
     except:
         pass
 
