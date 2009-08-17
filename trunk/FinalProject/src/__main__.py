@@ -66,7 +66,7 @@ while True:
     thisim = im = get_image()
 
     #im = im.filter(ImageFilter.MedianFilter(5))
-    #for i in range(1):
+    #for i in range(2):
     #    im = im.filter(ImageFilter.FIND_EDGES)
     #im = im.filter(ImageFilter.DETAIL)
     #im = im.filter(ImageFilter.CONTOUR)
@@ -108,11 +108,21 @@ while True:
     screen.fill((0,0,0))
     screen.blit(pg_img, (0,0))
 
-    print len(border) #, border
+    #print len(border) #, border
 
     for i in border:
         borderwalker.draw_points(i, screen)
+        #borderwalker.draw_quads(i, screen)
+
+    quads = borderwalker.find_quads(border)
+
+    for i in quads:
         borderwalker.draw_quads(i, screen)
+
+    markers = borderwalker.get_marker(quads)
+    for i in markers:
+        borderwalker.draw_marker(i, screen)
+    print len(markers)
     
     #marker = get_marker(im)
     #marker.draw(screen)
